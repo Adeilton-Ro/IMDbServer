@@ -9,11 +9,15 @@
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.11.0" />
     <PackageReference Include="FluentValidation" Version="11.2.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Feature\" />
+    <ProjectReference Include="..\IMDb.Domain\IMDb.Domain.csproj" />
+    <ProjectReference Include="..\IMDb.Infra.Database.Abstraction\IMDb.Infra.Database.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>

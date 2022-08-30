@@ -5,7 +5,17 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDbServer.Api", "src\IMDbServer.Api\IMDbServer.Api.csproj", "{2B76B891-7C71-465A-AB3A-1AAFED2A5129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDb.Application", "src\IMDb.Application\IMDb.Application.csproj", "{92E935B3-113C-4362-B281-55B5BD04ACBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Application", "src\IMDb.Application\IMDb.Application.csproj", "{92E935B3-113C-4362-B281-55B5BD04ACBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CA978CA5-A64F-4161-9249-8572A30A3823}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.ApplicationTest", "src\Teste\IMDb.ApplicationTest\IMDb.ApplicationTest.csproj", "{6544DB5C-C3B4-4B30-8A25-220362689BCC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Domain", "src\IMDb.Domain\IMDb.Domain.csproj", "{F8F91F85-5FEA-4FEA-80A5-959309F5C53D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Infra.DataBase", "src\IMDb.Infra.DataBase\IMDb.Infra.DataBase.csproj", "{A7EFB900-E25E-4B9A-8F47-92AFFDFA0FAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Infra.Database.Abstraction", "src\IMDb.Infra.Database.Abstraction\IMDb.Infra.Database.Abstraction.csproj", "{FB47BCAE-D208-4075-B2AF-6DCB1FAAFB4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +31,28 @@ Global
 		{92E935B3-113C-4362-B281-55B5BD04ACBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92E935B3-113C-4362-B281-55B5BD04ACBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92E935B3-113C-4362-B281-55B5BD04ACBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6544DB5C-C3B4-4B30-8A25-220362689BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6544DB5C-C3B4-4B30-8A25-220362689BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6544DB5C-C3B4-4B30-8A25-220362689BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6544DB5C-C3B4-4B30-8A25-220362689BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8F91F85-5FEA-4FEA-80A5-959309F5C53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F91F85-5FEA-4FEA-80A5-959309F5C53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F91F85-5FEA-4FEA-80A5-959309F5C53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F91F85-5FEA-4FEA-80A5-959309F5C53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7EFB900-E25E-4B9A-8F47-92AFFDFA0FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7EFB900-E25E-4B9A-8F47-92AFFDFA0FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7EFB900-E25E-4B9A-8F47-92AFFDFA0FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7EFB900-E25E-4B9A-8F47-92AFFDFA0FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB47BCAE-D208-4075-B2AF-6DCB1FAAFB4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB47BCAE-D208-4075-B2AF-6DCB1FAAFB4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB47BCAE-D208-4075-B2AF-6DCB1FAAFB4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB47BCAE-D208-4075-B2AF-6DCB1FAAFB4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6544DB5C-C3B4-4B30-8A25-220362689BCC} = {CA978CA5-A64F-4161-9249-8572A30A3823}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2152D2E9-D94E-4F8D-8A8E-BF1C629B450C}
