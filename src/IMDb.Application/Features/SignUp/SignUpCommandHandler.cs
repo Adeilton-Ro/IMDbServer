@@ -36,7 +36,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUp
             Hash = cryptographyService.Hash(request.Password, salt)
         };
 
-        userRepository.Create(user, cancellationToken);
+        await userRepository.Create(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Ok(new SignUpCommandResponse(user.Id));
