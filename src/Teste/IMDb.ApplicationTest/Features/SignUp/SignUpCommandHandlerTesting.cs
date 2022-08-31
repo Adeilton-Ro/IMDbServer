@@ -4,7 +4,6 @@ using IMDb.Infra.Database.Abstraction.Interfaces;
 using Moq;
 using Xunit;
 using IMDb.Application.Features.SignUp;
-using IMDb.Domain.Entities.Abstract;
 using IMDb.Domain.Entities;
 
 namespace IMDb.ApplicationTest.Features.SignUp;
@@ -17,7 +16,7 @@ public class SignUpCommandHandlerTesting
         {
             new Client
             {
-                Email = "Teste@IMDbServer.com"
+                Email = "teste@imdbserver.com"
             }
         };
 

@@ -22,6 +22,15 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginCom
 
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var client = await userRepository.GetByEmail(request.Email.ToLower(), cancellationToken);
+        if (client is null)
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
+        if (!cryptographyService.Compare(client.Hash, request.Password, client.Salt))
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
+        var token = tokenService.GenerateToken(client);
+
+        return Result.Ok(new LoginCommandResponse(token));
     }
 }

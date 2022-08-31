@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using IMDb.Application.Behaviours;
 using IMDb.Application.Services.Crypto;
+using IMDb.Application.Services.Token;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblyContaining(typeof(SignUpCommandValidation));
 
         services.AddScoped<ICryptographyService, CryptographyService>();
+        services.AddScoped<ITokenService, JwtTokenService>();
 
         return services;
     }

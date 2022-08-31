@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
+using IMDb.Application.Features.Login;
 using IMDb.Application.Features.SignUp;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,14 @@ public static class Endpoints
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
             });
+
+        app.MapPost("/login",
+            async ([FromServices] ISender sender, [FromBody] LoginCommand request, CancellationToken cancellationToken) =>
+            {
+                var result = await sender.Send(request, cancellationToken);
+                return SendResponse(result);
+            });
+
 
 
         return app;
