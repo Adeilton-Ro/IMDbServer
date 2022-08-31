@@ -21,6 +21,22 @@ public class AdmSignUpCommandHandler : IRequestHandler<AdmSignUpCommand, Result<
     }
     public async Task<Result<AdmSignUpCommandResponse>> Handle(AdmSignUpCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (await userRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
+            return Result.Fail(new ApplicationError("This email is alredy in use"));
+
+        var salt = cryptographyService.CreateSalt();
+        var user = new Adm
+        {
+            Id = Guid.NewGuid(),
+            Name = request.Name,
+            Email = request.Email.ToLower(),
+            Salt = salt,
+            Hash = cryptographyService.Hash(request.Password, salt)
+        };
+
+        await userRepository.Create(user, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Ok(new AdmSignUpCommandResponse(user.Id));
     }
 }

@@ -1,9 +1,11 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
 using IMDb.Application.Features.AdmLogin;
+using IMDb.Application.Features.AdmSignUp;
 using IMDb.Application.Features.Login;
 using IMDb.Application.Features.SignUp;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IMDbServer.Api;
@@ -11,7 +13,7 @@ public static class Endpoints
 {
     public static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapPost("/signup", 
+        app.MapPost("/signup",
             async ([FromServices] ISender sender, [FromBody] SignUpCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
@@ -27,6 +29,13 @@ public static class Endpoints
 
         app.MapPost("adm/login",
             async ([FromServices] ISender sender, [FromBody] AdmLoginCommand request, CancellationToken cancellationToken) =>
+            {
+                var result = await sender.Send(request, cancellationToken);
+                return SendResponse(result);
+            });
+
+        app.MapPost("adm/signup",
+            [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromBody] AdmSignUpCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
