@@ -1,4 +1,6 @@
 ﻿using FluentResults;
+using IMDb.Application.Extension;
+using IMDb.Application.Features.Login;
 using IMDb.Application.Services.Crypto;
 using IMDb.Application.Services.Token;
 using IMDb.Domain.Entities;
@@ -20,6 +22,15 @@ public class AdmLoginCommandHandler : IRequestHandler<AdmLoginCommand, Result<Ad
     }
     public async Task<Result<AdmLoginCommandResponse>> Handle(AdmLoginCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var adm = await userRepository.GetByEmail(request.Email.ToLower(), cancellationToken);
+        if (adm is null)
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
+        if (!cryptographyService.Compare(adm.Hash, request.Password, adm.Salt))
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
+        var token = tokenService.GenerateToken(adm);
+
+        return Result.Ok(new AdmLoginCommandResponse(token));
     }
 }
