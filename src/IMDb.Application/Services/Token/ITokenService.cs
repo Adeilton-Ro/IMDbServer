@@ -1,5 +1,7 @@
-﻿namespace IMDb.Application.Services.Token;
-public class ITokenService
+﻿using IMDb.Domain.Entities.Abstract;
+
+namespace IMDb.Application.Services.Token;
+public interface ITokenService
 {
-    //string GenerateToken();
+    string GenerateToken(User client);
 }

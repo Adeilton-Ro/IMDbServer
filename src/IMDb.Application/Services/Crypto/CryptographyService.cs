@@ -4,6 +4,9 @@ using System.Text;
 namespace IMDb.Application.Services.Crypto;
 public class CryptographyService : ICryptographyService
 {
+    public bool Compare(string cryptoPlainText, string plainText, string salt)
+        => cryptoPlainText == Hash(plainText, salt);
+
     public string CreateSalt()
     {
         var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
