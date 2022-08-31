@@ -23,7 +23,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUp
 
     public async Task<Result<SignUpCommandResponse>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        if (await userRepository.IsUniqueEmail(request.Email, cancellationToken))
+        if (await userRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
             return Result.Fail(new ApplicationError("This email is alredy in use"));
 
         var salt = cryptographyService.CreateSalt();
@@ -31,7 +31,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUp
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            Email = request.Email,
+            Email = request.Email.ToLower(),
             Salt = salt,
             Hash = cryptographyService.Hash(request.Password, salt)
         };
