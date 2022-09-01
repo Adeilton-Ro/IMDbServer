@@ -2,11 +2,13 @@
 using IMDb.Application.Extension;
 using IMDb.Application.Features.AdmLogin;
 using IMDb.Application.Features.AdmSignUp;
+using IMDb.Application.Features.ClientEdit;
 using IMDb.Application.Features.ClientLogin;
 using IMDb.Application.Features.ClientSignUp;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IMDbServer.Api;
 public static class Endpoints
@@ -22,6 +24,14 @@ public static class Endpoints
 
         app.MapPost("/login",
             async ([FromServices] ISender sender, [FromBody] LoginCommand request, CancellationToken cancellationToken) =>
+            {
+                var result = await sender.Send(request, cancellationToken);
+                return SendResponse(result);
+            });
+
+        app.MapPost("/edit",
+            [Authorize(Roles = "Client")] async ([FromServices] ISender sender, ClaimsPrincipal claims, 
+            [FromBody] EditClientCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
