@@ -7,7 +7,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.SignUp;
+namespace IMDb.Application.Features.ClientSignUp;
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUpCommandResponse>>
 {
     private readonly IUserRepository<Client> userRepository;

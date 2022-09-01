@@ -3,10 +3,10 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using Moq;
 using Xunit;
-using IMDb.Application.Features.SignUp;
+using IMDb.Application.Features.ClientSignUp;
 using IMDb.Domain.Entities;
 
-namespace IMDb.ApplicationTest.Features.SignUp;
+namespace IMDb.ApplicationTest.Features.ClientSignUp;
 public class SignUpCommandHandlerTesting
 {
     public static (Mock<IUserRepository<Client>> userRepositoryMock, Mock<ICryptographyService> cryptoServiceMock,

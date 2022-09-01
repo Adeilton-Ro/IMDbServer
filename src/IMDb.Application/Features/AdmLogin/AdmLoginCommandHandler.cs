@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
-using IMDb.Application.Features.Login;
 using IMDb.Application.Services.Crypto;
 using IMDb.Application.Services.Token;
 using IMDb.Domain.Entities;

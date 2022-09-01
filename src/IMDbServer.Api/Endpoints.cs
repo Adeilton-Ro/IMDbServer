@@ -2,8 +2,8 @@
 using IMDb.Application.Extension;
 using IMDb.Application.Features.AdmLogin;
 using IMDb.Application.Features.AdmSignUp;
-using IMDb.Application.Features.Login;
-using IMDb.Application.Features.SignUp;
+using IMDb.Application.Features.ClientLogin;
+using IMDb.Application.Features.ClientSignUp;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

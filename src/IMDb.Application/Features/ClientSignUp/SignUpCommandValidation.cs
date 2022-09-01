@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IMDb.Application.Features.SignUp;
+using IMDb.Application.Features.ClientSignUp;
 
 public class SignUpCommandValidation : AbstractValidator<SignUpCommand>
 {
