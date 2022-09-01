@@ -19,4 +19,14 @@ public class UserRepository<T> : IUserRepository<T> where T : User
 
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
         => !await context.Set<T>().AnyAsync(c => c.Email == email, cancellationToken);
+    
+    public void Edit(T user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<T> GetById(Guid Id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
