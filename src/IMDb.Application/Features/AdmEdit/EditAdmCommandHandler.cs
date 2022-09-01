@@ -21,6 +21,22 @@ public class EditAdmCommandHandler : IRequestHandler<EditAdmCommand, Result>
     }
     public async Task<Result> Handle(EditAdmCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var adm = await userRepository.GetById(request.Id, cancellationToken);
+        if (adm is null)
+            return Result.Fail(new ApplicationError("User was not find"));
+
+        if (adm.Email != request.Email && !await userRepository.IsUniqueEmail(request.Email, cancellationToken))
+            return Result.Fail(new ApplicationError("this email is already in use"));
+
+        var salt = cryptographyService.CreateSalt();
+        adm.Name = request.Name;
+        adm.Email = request.Email;
+        adm.Salt = salt;
+        adm.Hash = cryptographyService.Hash(request.Password, salt);
+
+        userRepository.Edit(adm);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Ok();
     }
 }

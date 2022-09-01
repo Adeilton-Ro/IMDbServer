@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
+using IMDb.Application.Features.AdmEdit;
 using IMDb.Application.Features.AdmLogin;
 using IMDb.Application.Features.AdmSignUp;
 using IMDb.Application.Features.ClientEdit;
@@ -30,8 +31,7 @@ public static class Endpoints
             });
 
         app.MapPost("/edit",
-            [Authorize(Roles = "Client")] async ([FromServices] ISender sender, ClaimsPrincipal claims, 
-            [FromBody] EditClientCommand request, CancellationToken cancellationToken) =>
+            [Authorize(Roles = "Client")] async ([FromServices] ISender sender, [FromBody] EditClientCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
@@ -46,6 +46,13 @@ public static class Endpoints
 
         app.MapPost("adm/signup",
             [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromBody] AdmSignUpCommand request, CancellationToken cancellationToken) =>
+            {
+                var result = await sender.Send(request, cancellationToken);
+                return SendResponse(result);
+            });
+
+        app.MapPost("adm/edit",
+            [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromBody] EditAdmCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
