@@ -3,8 +3,8 @@ using IMDb.Application.Commun;
 using MediatR;
 using System.Text.Json.Serialization;
 
-namespace IMDb.Application.Features.ClientEdit;
-public record EditClientCommand : IRequest<Result>
+namespace IMDb.Application.Features.AdmEdit;
+public record EditAdmCommand : IRequest<Result>
 {
     [FromUserInfo]
     [JsonIgnore]
@@ -13,7 +13,7 @@ public record EditClientCommand : IRequest<Result>
     public string Email { get; }
     public string Password { get; }
 
-    public EditClientCommand(Guid id, string name, string email, string password)
+    public EditAdmCommand(Guid id, string name, string email, string password)
     {
         Id = id;
         Name = name;
