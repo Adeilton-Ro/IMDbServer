@@ -26,7 +26,7 @@ public class AdmSignUpCommandHandlerTesting
             .Returns((Adm user, CancellationToken cancellationToken) => Task.CompletedTask);
 
         userRepository.Setup(ur => ur.IsUniqueEmail(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .Returns((string email, CancellationToken cancellationToken) => Task.FromResult(context.Any(c => c.Email == email)));
+            .Returns((string email, CancellationToken cancellationToken) => Task.FromResult(!context.Any(c => c.Email == email)));
 
         var cryptographyService = new Mock<ICryptographyService>();
         cryptographyService.Setup(cs => cs.CreateSalt()).Returns(() => "Random Salt");

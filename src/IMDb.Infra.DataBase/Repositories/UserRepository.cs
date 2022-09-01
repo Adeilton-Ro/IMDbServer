@@ -10,7 +10,6 @@ public class UserRepository<T> : IUserRepository<T> where T : User
     public UserRepository(IMDbServerDbContext context)
     {
         this.context = context;
-
     }
     public async Task Create(T user, CancellationToken cancellationToken)
         => await context.AddAsync(user, cancellationToken);
@@ -18,6 +17,6 @@ public class UserRepository<T> : IUserRepository<T> where T : User
     public Task<T> GetByEmail(string email, CancellationToken cancellationToken)
      => context.Set<T>().FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
-    public Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
-        => context.Set<T>().AnyAsync(c => c.Email == email, cancellationToken);
+    public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
+        => !await context.Set<T>().AnyAsync(c => c.Email == email, cancellationToken);
 }

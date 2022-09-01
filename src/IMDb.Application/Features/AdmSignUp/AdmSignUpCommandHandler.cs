@@ -21,7 +21,7 @@ public class AdmSignUpCommandHandler : IRequestHandler<AdmSignUpCommand, Result<
     }
     public async Task<Result<AdmSignUpCommandResponse>> Handle(AdmSignUpCommand request, CancellationToken cancellationToken)
     {
-        if (await userRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
+        if (!await userRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
             return Result.Fail(new ApplicationError("This email is alredy in use"));
 
         var salt = cryptographyService.CreateSalt();
