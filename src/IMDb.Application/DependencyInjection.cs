@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandlingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandlingBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SetUserInfoBehaviour<,>));
 
         services.AddValidatorsFromAssemblyContaining(typeof(SignUpCommandValidation));
 
