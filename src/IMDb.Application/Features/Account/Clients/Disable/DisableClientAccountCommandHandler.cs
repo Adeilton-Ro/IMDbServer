@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDb.Application.Extension;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
@@ -18,6 +19,18 @@ public class DisableClientAccountCommandHandler : IRequestHandler<DisableClientA
 
     public async Task<Result> Handle(DisableClientAccountCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var client = await userRepository.GetById(request.Id, cancellationToken);
+
+        if (client is null)
+            return Result.Fail(new ApplicationError("User wasn't found"));
+
+        if (!client.isActive)
+            return Result.Fail(new ApplicationError("User is already disable"));
+
+        client.isActive = false;
+        userRepository.Edit(client);
+
+        await unitOfWork.SaveChangesAsync();
+        return Result.Ok();
     }
 }

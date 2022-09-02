@@ -3,6 +3,7 @@ using IMDb.Application.Extension;
 using IMDb.Application.Features.Account.Adms.Disable;
 using IMDb.Application.Features.Account.Adms.Edit;
 using IMDb.Application.Features.Account.Adms.SignUp;
+using IMDb.Application.Features.Account.Clients.Disable;
 using IMDb.Application.Features.Account.Clients.Edit;
 using IMDb.Application.Features.Account.Clients.SignUp;
 using IMDb.Application.Features.Auth.Adms.Login;
@@ -36,6 +37,12 @@ public static class Endpoints
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
             });
+
+        app.MapPut("/disable", [Authorize(Roles = "Client")] async ([FromServices] ISender sender, [FromBody] DisableClientAccountCommand request, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+            return SendResponse(result);
+        });
 
         app.MapPost("adm/login",
             async ([FromServices] ISender sender, [FromBody] AdmLoginCommand request, CancellationToken cancellationToken) =>
