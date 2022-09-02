@@ -6,4 +6,5 @@ public abstract class User : Entity
     public string Email { get; set; } = string.Empty;
     public string Hash { get; set; }
     public string Salt { get; set; }
+    public bool isActive { get; set; }
 }

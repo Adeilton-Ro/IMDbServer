@@ -31,7 +31,8 @@ public class AdmSignUpCommandHandler : IRequestHandler<AdmSignUpCommand, Result<
             Name = request.Name,
             Email = request.Email.ToLower(),
             Salt = salt,
-            Hash = cryptographyService.Hash(request.Password, salt)
+            Hash = cryptographyService.Hash(request.Password, salt),
+            isActive = true
         };
 
         await userRepository.Create(user, cancellationToken);

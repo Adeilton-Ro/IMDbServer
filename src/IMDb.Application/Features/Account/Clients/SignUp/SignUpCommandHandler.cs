@@ -33,7 +33,8 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUp
             Name = request.Name,
             Email = request.Email.ToLower(),
             Salt = salt,
-            Hash = cryptographyService.Hash(request.Password, salt)
+            Hash = cryptographyService.Hash(request.Password, salt),
+            isActive = true
         };
 
         await userRepository.Create(user, cancellationToken);

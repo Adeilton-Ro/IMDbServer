@@ -11,5 +11,6 @@ public class ClientMap : IEntityTypeConfiguration<Client>
         builder.Property(c => c.Name).IsRequired();
         builder.Property(c => c.Salt).IsRequired().HasMaxLength(16);
         builder.Property(c => c.Hash).IsRequired().HasMaxLength(64);
+        builder.Property(c => c.isActive).HasDefaultValue(true);
     }
 }
