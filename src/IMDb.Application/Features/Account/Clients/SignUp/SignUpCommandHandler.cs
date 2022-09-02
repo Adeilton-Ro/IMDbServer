@@ -2,30 +2,32 @@
 using IMDb.Application.Extension;
 using IMDb.Application.Services.Crypto;
 using IMDb.Domain.Entities;
+using IMDb.Domain.Entities.Abstract;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.AdmSignUp;
-public class AdmSignUpCommandHandler : IRequestHandler<AdmSignUpCommand, Result<AdmSignUpCommandResponse>>
+namespace IMDb.Application.Features.Account.Clients.SignUp;
+public class SignUpCommandHandler : IRequestHandler<SignUpCommand, Result<SignUpCommandResponse>>
 {
-    private readonly IUserRepository<Adm> userRepository;
+    private readonly IUserRepository<Client> userRepository;
     private readonly ICryptographyService cryptographyService;
     private readonly IUnitOfWork unitOfWork;
 
-    public AdmSignUpCommandHandler(IUserRepository<Adm> userRepository, ICryptographyService cryptographyService, IUnitOfWork unitOfWork)
+    public SignUpCommandHandler(IUserRepository<Client> userRepository, ICryptographyService cryptographyService, IUnitOfWork unitOfWork)
     {
         this.userRepository = userRepository;
         this.cryptographyService = cryptographyService;
         this.unitOfWork = unitOfWork;
     }
-    public async Task<Result<AdmSignUpCommandResponse>> Handle(AdmSignUpCommand request, CancellationToken cancellationToken)
+
+    public async Task<Result<SignUpCommandResponse>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
         if (!await userRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
             return Result.Fail(new ApplicationError("This email is alredy in use"));
 
         var salt = cryptographyService.CreateSalt();
-        var user = new Adm
+        var user = new Client
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
@@ -37,6 +39,6 @@ public class AdmSignUpCommandHandler : IRequestHandler<AdmSignUpCommand, Result<
         await userRepository.Create(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result.Ok(new AdmSignUpCommandResponse(user.Id));
+        return Result.Ok(new SignUpCommandResponse(user.Id));
     }
 }

@@ -6,7 +6,7 @@ using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.ClientLogin;
+namespace IMDb.Application.Features.Auth.Clients.Login;
 public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
 {
     private readonly IUserRepository<Client> userRepository;

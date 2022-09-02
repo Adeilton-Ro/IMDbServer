@@ -3,7 +3,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using Moq;
 using Xunit;
-using IMDb.Application.Features.ClientSignUp;
+using IMDb.Application.Features.Account.Clients.SignUp;
 using IMDb.Domain.Entities;
 
 namespace IMDb.ApplicationTest.Features.ClientSignUp;

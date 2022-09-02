@@ -4,7 +4,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using Moq;
 using Xunit;
-using IMDb.Application.Features.AdmSignUp;
+using IMDb.Application.Features.Account.Adms.SignUp;
 
 namespace IMDb.ApplicationTest.Features.AdmSignUp;
 public class AdmSignUpCommandHandlerTesting

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace IMDb.Application.Features.ClientLogin;
+namespace IMDb.Application.Features.Auth.Clients.Login;
 public class LoginCommandValidation : AbstractValidator<LoginCommand>
 {
     public LoginCommandValidation()

@@ -1,4 +1,4 @@
-﻿using IMDb.Application.Features.ClientEdit;
+﻿using IMDb.Application.Features.Account.Clients.Edit;
 using IMDb.Application.Services.Crypto;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces;
@@ -65,7 +65,7 @@ public class EditClientCommandHandlerTesting
     }
 
     [Fact]
-    public async Task Client_Wasnt_Find()
+    public async Task Client_Wasnt_Found()
     {
         (Mock<IUserRepository<Client>> userRepositoryMock, Mock<IUnitOfWork> unitOfWorkMock,
             ICryptographyService cryptographyService, List<Client> context) = GetDependency();
@@ -79,7 +79,7 @@ public class EditClientCommandHandlerTesting
     }
 
     [Fact]
-    public async Task Email_Was_Different_And_Not_Unique()
+    public async Task Email_Is_Different_And_Not_Unique()
     {
         (Mock<IUserRepository<Client>> userRepositoryMock, Mock<IUnitOfWork> unitOfWorkMock,
             ICryptographyService cryptographyService, List<Client> context) = GetDependency();

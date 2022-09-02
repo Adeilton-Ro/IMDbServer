@@ -4,7 +4,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using IMDb.Infra.Database.Abstraction.Interfaces;
 using Moq;
 using Xunit;
-using IMDb.Application.Features.AdmEdit;
+using IMDb.Application.Features.Account.Adms.Edit;
 
 namespace IMDb.ApplicationTest.Features.AdmEdit;
 public class EditAdmCommandHandlerTesting
@@ -65,7 +65,7 @@ public class EditAdmCommandHandlerTesting
     }
 
     [Fact]
-    public async Task Client_Wasnt_Find()
+    public async Task Client_Wasnt_Found()
     {
         (Mock<IUserRepository<Adm>> userRepositoryMock, Mock<IUnitOfWork> unitOfWorkMock,
             ICryptographyService cryptographyService, List<Adm> context) = GetDependency();

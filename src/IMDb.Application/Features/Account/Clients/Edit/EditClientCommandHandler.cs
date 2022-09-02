@@ -1,4 +1,4 @@
-﻿    using FluentResults;
+﻿using FluentResults;
 using IMDb.Application.Extension;
 using IMDb.Application.Services.Crypto;
 using IMDb.Domain.Entities;
@@ -6,7 +6,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.ClientEdit;
+namespace IMDb.Application.Features.Account.Clients.Edit;
 public class EditClientCommandHandler : IRequestHandler<EditClientCommand, Result>
 {
     private readonly IUserRepository<Client> userRepository;

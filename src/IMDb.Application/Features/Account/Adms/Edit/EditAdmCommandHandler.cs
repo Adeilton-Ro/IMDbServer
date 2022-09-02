@@ -6,7 +6,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.AdmEdit;
+namespace IMDb.Application.Features.Account.Adms.Edit;
 public class EditAdmCommandHandler : IRequestHandler<EditAdmCommand, Result>
 {
     private readonly IUserRepository<Adm> userRepository;

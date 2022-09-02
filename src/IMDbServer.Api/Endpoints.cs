@@ -1,11 +1,11 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
-using IMDb.Application.Features.AdmEdit;
-using IMDb.Application.Features.AdmLogin;
-using IMDb.Application.Features.AdmSignUp;
-using IMDb.Application.Features.ClientEdit;
-using IMDb.Application.Features.ClientLogin;
-using IMDb.Application.Features.ClientSignUp;
+using IMDb.Application.Features.Account.Adms.Edit;
+using IMDb.Application.Features.Account.Adms.SignUp;
+using IMDb.Application.Features.Account.Clients.Edit;
+using IMDb.Application.Features.Account.Clients.SignUp;
+using IMDb.Application.Features.Auth.Adms.Login;
+using IMDb.Application.Features.Auth.Clients.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public static class Endpoints
                 return SendResponse(result);
             });
 
-        app.MapPost("/edit",
+        app.MapPut("/edit",
             [Authorize(Roles = "Client")] async ([FromServices] ISender sender, [FromBody] EditClientCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);
@@ -51,7 +51,7 @@ public static class Endpoints
                 return SendResponse(result);
             });
 
-        app.MapPost("adm/edit",
+        app.MapPut("adm/edit",
             [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromBody] EditAdmCommand request, CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(request, cancellationToken);

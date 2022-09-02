@@ -1,4 +1,4 @@
-﻿using IMDb.Application.Features.AdmLogin;
+﻿using IMDb.Application.Features.Auth.Adms.Login;
 using IMDb.Application.Services.Crypto;
 using IMDb.Application.Services.Token;
 using IMDb.Domain.Entities;
