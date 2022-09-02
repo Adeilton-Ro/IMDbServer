@@ -25,6 +25,9 @@ public class AdmLoginCommandHandler : IRequestHandler<AdmLoginCommand, Result<Ad
         if (adm is null)
             return Result.Fail(new ApplicationError("Incorrect email/password"));
 
+        if (!adm.isActive)
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
         if (!cryptographyService.Compare(adm.Hash, request.Password, adm.Salt))
             return Result.Fail(new ApplicationError("Incorrect email/password"));
 

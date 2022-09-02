@@ -21,6 +21,14 @@ public class LoginCommandHandlerTesting
                 Email = "teste@imdbserver.com",
                 Hash = cryptographyService.Hash("Password", salt),
                 Salt = salt,
+                isActive = true,
+            },
+            new Client
+            {
+                Email = "unable@imdbserver.com",
+                Hash = cryptographyService.Hash("Password", salt),
+                Salt = salt,
+                isActive = false
             }
         };
 
@@ -34,7 +42,7 @@ public class LoginCommandHandlerTesting
     }
 
     [Fact]
-    public async Task Is_Success_Login()
+    public async Task Success_Login()
     {
         (Mock<IUserRepository<Client>> UserRepositoryMock, ICryptographyService cryptographyService,
         Mock<ITokenService> tokenServiceMock) = GetDependency();
@@ -73,6 +81,21 @@ public class LoginCommandHandlerTesting
         Mock<ITokenService> tokenServiceMock) = GetDependency();
 
         var request = new LoginCommand("WrongEmail@IMDbServer.com", "Password");
+        var handler = new LoginCommandHandler(UserRepositoryMock.Object, cryptographyService, tokenServiceMock.Object);
+        var result = await handler.Handle(request, CancellationToken.None);
+
+        Assert.True(result.IsFailed);
+        Assert.NotEmpty(result.Errors);
+        Assert.Null(result.ValueOrDefault);
+    }
+
+    [Fact]
+    public async Task User_Is_Disable()
+    {
+        (Mock<IUserRepository<Client>> UserRepositoryMock, ICryptographyService cryptographyService,
+        Mock<ITokenService> tokenServiceMock) = GetDependency();
+
+        var request = new LoginCommand("unable@imdbserver.com", "Password");
         var handler = new LoginCommandHandler(UserRepositoryMock.Object, cryptographyService, tokenServiceMock.Object);
         var result = await handler.Handle(request, CancellationToken.None);
 

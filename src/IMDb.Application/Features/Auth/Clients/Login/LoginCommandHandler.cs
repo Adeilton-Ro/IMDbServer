@@ -5,6 +5,7 @@ using IMDb.Application.Services.Token;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
+using System.Runtime.Intrinsics.Arm;
 
 namespace IMDb.Application.Features.Auth.Clients.Login;
 public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
@@ -24,6 +25,9 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginCom
     {
         var client = await userRepository.GetByEmail(request.Email.ToLower(), cancellationToken);
         if (client is null)
+            return Result.Fail(new ApplicationError("Incorrect email/password"));
+
+        if (!client.isActive)
             return Result.Fail(new ApplicationError("Incorrect email/password"));
 
         if (!cryptographyService.Compare(client.Hash, request.Password, client.Salt))
