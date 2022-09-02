@@ -6,7 +6,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using Moq;
 using Xunit;
 
-namespace IMDb.ApplicationTest.Features.ClientLogin;
+namespace IMDb.ApplicationTest.Features.Auth.Clients.Login;
 public class LoginCommandHandlerTesting
 {
     public static (Mock<IUserRepository<Client>> UserRepositoryMock, ICryptographyService cryptographyService, Mock<ITokenService> tokenServiceMock) GetDependency()

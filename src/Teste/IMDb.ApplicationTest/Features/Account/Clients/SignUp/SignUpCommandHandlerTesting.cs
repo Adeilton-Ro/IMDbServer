@@ -6,7 +6,7 @@ using Xunit;
 using IMDb.Application.Features.Account.Clients.SignUp;
 using IMDb.Domain.Entities;
 
-namespace IMDb.ApplicationTest.Features.ClientSignUp;
+namespace IMDb.ApplicationTest.Features.Account.Clients.SignUp;
 public class SignUpCommandHandlerTesting
 {
     public static (Mock<IUserRepository<Client>> userRepositoryMock, Mock<ICryptographyService> cryptoServiceMock,

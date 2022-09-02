@@ -6,7 +6,7 @@ using Moq;
 using Xunit;
 using IMDb.Application.Features.Account.Adms.SignUp;
 
-namespace IMDb.ApplicationTest.Features.AdmSignUp;
+namespace IMDb.ApplicationTest.Features.Account.Adms.SignUp;
 public class AdmSignUpCommandHandlerTesting
 {
     public static (Mock<IUserRepository<Adm>> userRepositoryMock, Mock<ICryptographyService> cryptoServiceMock,
