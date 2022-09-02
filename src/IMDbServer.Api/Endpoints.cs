@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
+using IMDb.Application.Features.Account.Adms.Disable;
 using IMDb.Application.Features.Account.Adms.Edit;
 using IMDb.Application.Features.Account.Adms.SignUp;
 using IMDb.Application.Features.Account.Clients.Edit;
@@ -9,7 +10,6 @@ using IMDb.Application.Features.Auth.Clients.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace IMDbServer.Api;
 public static class Endpoints
@@ -57,6 +57,12 @@ public static class Endpoints
                 var result = await sender.Send(request, cancellationToken);
                 return SendResponse(result);
             });
+
+        app.MapPut("adm/disable", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromBody] DisableAdmAccountCommand request, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+            return SendResponse(result);
+        });
 
         return app;
     }

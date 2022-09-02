@@ -18,6 +18,18 @@ public class DisableAdmAccountCommandHandler : IRequestHandler<DisableAdmAccount
     }
     public async Task<Result> Handle(DisableAdmAccountCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var adm = await userRepository.GetById(request.Id, cancellationToken);
+
+        if (adm is null)
+            return Result.Fail(new ApplicationError("User wasn't found"));
+
+        if (!adm.isActive)
+            return Result.Fail(new ApplicationError("User is already disable"));
+
+        adm.isActive = false;
+        userRepository.Edit(adm);
+
+        await unitOfWork.SaveChangesAsync();
+        return Result.Ok();
     }
 }
