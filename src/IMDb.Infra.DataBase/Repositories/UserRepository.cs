@@ -26,6 +26,9 @@ public class UserRepository<T> : IUserRepository<T> where T : User
     public Task<T> GetById(Guid id, CancellationToken cancellationToken)
         => context.Set<T>().FirstOrDefaultAsync(u => u.Id == id);
 
-    public IEnumerable<T> GetAllActive()
-        => context.Set<T>().Where(u => u.isActive);
+    public List<T> GetAllActive()
+        => context.Set<T>().Where(u => u.isActive).OrderBy(u => u.Name).ToList();
+
+    public List<T> GetAllActiveDescending()
+        => context.Set<T>().Where(u => u.isActive).OrderByDescending(u => u.Name).ToList();
 }

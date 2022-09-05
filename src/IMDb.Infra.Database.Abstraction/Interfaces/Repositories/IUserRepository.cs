@@ -8,5 +8,6 @@ public interface IUserRepository<T> where T : User
     Task<T> GetByEmail(string email, CancellationToken cancellationToken);
     void Edit(T user);
     Task<T> GetById(Guid Id, CancellationToken cancellationToken);
-    IEnumerable<T> GetAllActive();
+    List<T> GetAllActive();
+    List<T> GetAllActiveDescending();
 }
