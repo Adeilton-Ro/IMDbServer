@@ -1,7 +1,6 @@
 ﻿using IMDb.Domain.Entities.Abstract;
 
 namespace IMDb.Domain.Entities;
-public class Client : User
+public class Director : Cast
 {
-    public IEnumerable<Vote> Votes { get; set; }
 }
