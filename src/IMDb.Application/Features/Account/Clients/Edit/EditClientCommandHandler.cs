@@ -11,13 +11,11 @@ public class EditClientCommandHandler : IRequestHandler<EditClientCommand, Resul
 {
     private readonly IUserRepository<Client> userRepository;
     private readonly IUnitOfWork unitOfWork;
-    private readonly ICryptographyService cryptographyService;
 
-    public EditClientCommandHandler(IUserRepository<Client> userRepository, IUnitOfWork unitOfWork, ICryptographyService cryptographyService)
+    public EditClientCommandHandler(IUserRepository<Client> userRepository, IUnitOfWork unitOfWork)
     {
         this.userRepository = userRepository;
         this.unitOfWork = unitOfWork;
-        this.cryptographyService = cryptographyService;
     }
 
     public async Task<Result> Handle(EditClientCommand request, CancellationToken cancellationToken)
@@ -29,11 +27,8 @@ public class EditClientCommandHandler : IRequestHandler<EditClientCommand, Resul
         if (client.Email != request.Email && !await userRepository.IsUniqueEmail(request.Email, cancellationToken))
             return Result.Fail(new ApplicationError("this email is already in use"));
 
-        var salt = cryptographyService.CreateSalt();
         client.Name = request.Name;
         client.Email = request.Email;
-        client.Salt = salt;
-        client.Hash = cryptographyService.Hash(request.Password, salt);
 
         userRepository.Edit(client);
         await unitOfWork.SaveChangesAsync(cancellationToken);

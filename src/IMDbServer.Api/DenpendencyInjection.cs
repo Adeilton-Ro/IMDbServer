@@ -2,6 +2,7 @@
 using IMDb.Application.Services.Token;
 using IMDb.Application.Services.UserInfo;
 using IMDb.Infra.DataBase;
+using IMDbServer.Api.Profiles.EditAdm;
 using IMDbServer.Api.RequestHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -87,6 +88,7 @@ public static class DenpendencyInjection
         services.AddHttpContextAccessor();
         services.AddScoped<IUserInfoService, RequestUserInfoService>();
         services.AddCustomSwaggerGen();
+        services.AddAutoMapper(typeof(RequestToCommand));
 
         return services;
     }

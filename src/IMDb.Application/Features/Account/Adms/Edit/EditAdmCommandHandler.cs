@@ -10,13 +10,11 @@ namespace IMDb.Application.Features.Account.Adms.Edit;
 public class EditAdmCommandHandler : IRequestHandler<EditAdmCommand, Result>
 {
     private readonly IUserRepository<Adm> userRepository;
-    private readonly ICryptographyService cryptographyService;
     private readonly IUnitOfWork unitOfWork;
 
-    public EditAdmCommandHandler(IUserRepository<Adm> userRepository, ICryptographyService cryptographyService, IUnitOfWork unitOfWork)
+    public EditAdmCommandHandler(IUserRepository<Adm> userRepository, IUnitOfWork unitOfWork)
     {
         this.userRepository = userRepository;
-        this.cryptographyService = cryptographyService;
         this.unitOfWork = unitOfWork;
     }
     public async Task<Result> Handle(EditAdmCommand request, CancellationToken cancellationToken)
@@ -28,11 +26,8 @@ public class EditAdmCommandHandler : IRequestHandler<EditAdmCommand, Result>
         if (adm.Email != request.Email && !await userRepository.IsUniqueEmail(request.Email, cancellationToken))
             return Result.Fail(new ApplicationError("this email is already in use"));
 
-        var salt = cryptographyService.CreateSalt();
         adm.Name = request.Name;
         adm.Email = request.Email;
-        adm.Salt = salt;
-        adm.Hash = cryptographyService.Hash(request.Password, salt);
 
         userRepository.Edit(adm);
         await unitOfWork.SaveChangesAsync(cancellationToken);

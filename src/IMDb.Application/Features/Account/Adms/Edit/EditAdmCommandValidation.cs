@@ -7,6 +7,5 @@ public class EditAdmCommandValidation : AbstractValidator<EditAdmCommand>
     {
         RuleFor(ec => ec.Name).NotEmpty();
         RuleFor(ec => ec.Email).EmailAddress();
-        RuleFor(ec => ec.Password).MinimumLength(8);
     }
 }

@@ -40,7 +40,10 @@ public class DisableClientAccountCommandHandlerTesting
     [Fact]
     public async Task Disable_With_Success()
     {
-        var request = new DisableClientAccountCommand(Guid.Parse("6ce5fedb-f35a-4be4-8c0f-75df82718094"));
+        var request = new DisableClientAccountCommand()
+        {
+            Id = Guid.Parse("6ce5fedb-f35a-4be4-8c0f-75df82718094")
+        };
         var result = await handler.Handle(request, CancellationToken.None);
 
         unitOfWorkMock.VerifyAll();
@@ -52,7 +55,10 @@ public class DisableClientAccountCommandHandlerTesting
     [Fact]
     public async Task User_Wasnt_Found()
     {
-        var request = new DisableClientAccountCommand(Guid.Parse("b5efadc4-3269-4f00-9c04-c81b74ce1f70"));
+        var request = new DisableClientAccountCommand()
+        {
+            Id = Guid.Parse("b5efadc4-3269-4f00-9c04-c81b74ce1f70")
+        };
         var result = await handler.Handle(request, CancellationToken.None);
 
         Assert.True(result.IsFailed);
@@ -62,7 +68,10 @@ public class DisableClientAccountCommandHandlerTesting
     [Fact]
     public async Task User_Is_Already_Disable()
     {
-        var request = new DisableClientAccountCommand(Guid.Parse("88ffeeb9-7bf2-4a87-aab2-16be402a578d"));
+        var request = new DisableClientAccountCommand()
+        {
+            Id = Guid.Parse("88ffeeb9-7bf2-4a87-aab2-16be402a578d")
+        };
         var result = await handler.Handle(request, CancellationToken.None);
 
         Assert.True(result.IsFailed);
