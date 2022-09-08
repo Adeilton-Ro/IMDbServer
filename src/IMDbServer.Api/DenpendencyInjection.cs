@@ -2,7 +2,7 @@
 using IMDb.Application.Services.Token;
 using IMDb.Application.Services.UserInfo;
 using IMDb.Infra.DataBase;
-using IMDbServer.Api.Profiles.EditAdm;
+using IMDbServer.Api.Profiles;
 using IMDbServer.Api.RequestHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

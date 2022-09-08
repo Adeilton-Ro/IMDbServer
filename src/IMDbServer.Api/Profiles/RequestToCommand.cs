@@ -8,14 +8,14 @@ using IMDbServer.Api.Endpoints.Adm.CustomizedRequests.Edit;
 using IMDbServer.Api.Endpoints.User.CustomizedRequest.Disable;
 using IMDbServer.Api.Endpoints.User.CustomizedRequest.Edit;
 
-namespace IMDbServer.Api.Profiles.EditAdm;
+namespace IMDbServer.Api.Profiles;
 public class RequestToCommand : Profile
 {
-	public RequestToCommand()
-	{
-		CreateMap<EditAdmRequest, EditAdmCommand>();
-		CreateMap<DisableAdmAccountRequest, DisableAdmAccountCommand>();
-		CreateMap<EditClientRequest, EditClientCommand>();
-		CreateMap<DisableClientAccountRequest, DisableClientAccountCommand>();
-	}
+    public RequestToCommand()
+    {
+        CreateMap<EditAdmRequest, EditAdmCommand>();
+        CreateMap<DisableAdmAccountRequest, DisableAdmAccountCommand>();
+        CreateMap<EditClientRequest, EditClientCommand>();
+        CreateMap<DisableClientAccountRequest, DisableClientAccountCommand>();
+    }
 }
