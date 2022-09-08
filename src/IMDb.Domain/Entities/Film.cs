@@ -7,8 +7,7 @@ public class Film : Entity
     public IEnumerable<FilmImage> FilmImages { get; set; }
     public Guid GenderId { get; set; }
     public Gender Gender { get; set; }
-    public Guid ActorId { get; set; }
-    public Actor Actor { get; set; } 
+    public IEnumerable<ActorFilm> ActorFilms { get; set; } 
     public Guid DirectorId { get; set; }
     public Director Director { get; set; }
     public IEnumerable<Vote> Votes { get; set; }

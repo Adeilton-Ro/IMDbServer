@@ -9,6 +9,6 @@ public class ActorsMap : IEntityTypeConfiguration<Actor>
     {
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Name).IsRequired();
-        builder.HasMany(a => a.Films).WithOne(f => f.Actor).HasForeignKey(f => f.ActorId);
+        builder.HasMany(a => a.ActorFilms).WithOne(af => af.Actor).HasForeignKey(af => af.ActorId);
     }
 }

@@ -11,7 +11,7 @@ internal class FilmsMap : IEntityTypeConfiguration<Film>
         builder.Property(X => X.Name).IsRequired();
         builder.HasMany(f => f.Votes).WithOne(v => v.Film).HasForeignKey(v => v.FilmId);
         builder.HasOne(f => f.Director).WithMany(d => d.Films).HasForeignKey(f => f.DirectorId);
-        builder.HasOne(f => f.Actor).WithMany(a => a.Films).HasForeignKey(f => f.ActorId);
+        builder.HasMany(f => f.ActorFilms).WithOne(af => af.Film).HasForeignKey(af => af.FilmId);
         builder.HasOne(f => f.Gender).WithMany(g => g.Films).HasForeignKey(f => f.GenderId);
         builder.HasMany(f => f.FilmImages).WithOne(fi => fi.Film).HasForeignKey(fi => fi.FilmId);
     }
