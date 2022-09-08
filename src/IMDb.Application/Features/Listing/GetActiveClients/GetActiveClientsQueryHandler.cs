@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDb.Application.Extension;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
@@ -23,15 +24,15 @@ public class GetActiveClientsQueryHandler : IRequestHandler<GetActiveClientsQuer
 
         var response = clientList.Select(cl => new GetActiveClientsQueryResponse(cl.Id, cl.Email, cl.Name));
 
-        if (request.QuatityOfItems != 0)
+        if (request.QuatityOfItems != 0 || request.Page != 0)
         {
             var quantityDb = clientList.Count - 1;
 
             var start = request.QuatityOfItems * (request.Page - 1);
-            start = clientList.Count < start ? quantityDb : start;
 
             var end = start + request.QuatityOfItems;
-            end = clientList.Count < end? quantityDb: end;
+            if (quantityDb < start)
+                return Result.Fail(new ApplicationError("This page has no content"));
 
             var pagedClient = clientList.Skip(start).Take(end);
             response = pagedClient.Select(cl => new GetActiveClientsQueryResponse(cl.Id, cl.Email, cl.Name));
