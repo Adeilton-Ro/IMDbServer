@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using IMDb.Application.Extension;
 using IMDbServer.Api.Endpoints.Adm;
+using IMDbServer.Api.Endpoints.Film;
 using IMDbServer.Api.Endpoints.Listing;
 using IMDbServer.Api.Endpoints.User;
 
@@ -12,6 +13,7 @@ public static class MapAllEndpoints
         app.UseUserEndpoints();
         app.UseAdmsEndpoints();
         app.UseListingEndpoints();
+        app.UseFilmEndpoints();
         return app;
     }
 

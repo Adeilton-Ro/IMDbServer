@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IMDb.Domain\IMDb.Domain.csproj" />
     <ProjectReference Include="..\IMDb.Infra.Database.Abstraction\IMDb.Infra.Database.Abstraction.csproj" />
+    <ProjectReference Include="..\IMDb.Infra.FileServices.Abstraction\IMDb.Infra.FileSystem.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>

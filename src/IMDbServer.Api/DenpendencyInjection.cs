@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using IMDb.Infra.FileSystem;
 
 namespace IMDbServer.Api;
 public static class DenpendencyInjection
@@ -89,12 +90,15 @@ public static class DenpendencyInjection
         services.AddScoped<IUserInfoService, RequestUserInfoService>();
         services.AddCustomSwaggerGen();
         services.AddAutoMapper(typeof(RequestToCommand));
+        services.AddFileSystem();
 
         return services;
     }
 
     public static WebApplication Configure(this WebApplication app)
     {
+        app.UseStaticFiles();
+
         app.MapEndpoints();
 
         app.UseAuthentication();
