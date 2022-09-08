@@ -22,7 +22,7 @@ public class EditClientCommandHandler : IRequestHandler<EditClientCommand, Resul
     {
         var client = await userRepository.GetById(request.Id, cancellationToken);
         if (client is null)
-            return Result.Fail(new ApplicationError("User was not find"));
+            return Result.Fail(new ApplicationError("User was not found"));
 
         if (client.Email != request.Email && !await userRepository.IsUniqueEmail(request.Email, cancellationToken))
             return Result.Fail(new ApplicationError("this email is already in use"));

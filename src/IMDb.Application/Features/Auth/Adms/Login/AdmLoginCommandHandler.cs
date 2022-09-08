@@ -33,6 +33,6 @@ public class AdmLoginCommandHandler : IRequestHandler<AdmLoginCommand, Result<Ad
 
         var token = tokenService.GenerateToken(adm);
 
-        return Result.Ok(new AdmLoginCommandResponse(token));
+        return Result.Ok(new AdmLoginCommandResponse(adm.Name, adm.Email, token));
     }
 }

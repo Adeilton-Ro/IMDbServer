@@ -35,6 +35,6 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginCom
 
         var token = tokenService.GenerateToken(client);
 
-        return Result.Ok(new LoginCommandResponse(token));
+        return Result.Ok(new LoginCommandResponse(client.Name, client.Email, token));
     }
 }

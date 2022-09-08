@@ -21,7 +21,7 @@ public class EditAdmCommandHandler : IRequestHandler<EditAdmCommand, Result>
     {
         var adm = await userRepository.GetById(request.Id, cancellationToken);
         if (adm is null)
-            return Result.Fail(new ApplicationError("User was not find"));
+            return Result.Fail(new ApplicationError("User was not found"));
 
         if (adm.Email != request.Email && !await userRepository.IsUniqueEmail(request.Email, cancellationToken))
             return Result.Fail(new ApplicationError("this email is already in use"));
