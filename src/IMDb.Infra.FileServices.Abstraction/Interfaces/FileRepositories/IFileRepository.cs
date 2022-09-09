@@ -1,5 +1,6 @@
 ﻿namespace IMDb.Infra.FileSystem.Abstraction.Interfaces.FileRepositories;
 public interface IFileRepository
 {
-    string SaveDirectorImages(FileImage image, string NameImage);
+    string SaveDirectorImage(FileImage image, string ImageName);
+    string SaveActorImage(FileImage image, string ImageName);
 }

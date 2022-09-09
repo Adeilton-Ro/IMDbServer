@@ -4,7 +4,23 @@ using IMDb.Infra.FileSystem.Abstraction.Interfaces.FileRepositories;
 namespace IMDb.Infra.FileSystem.FileRepositories;
 public class FileRepository : IFileRepository
 {
-    public string SaveDirectorImages(FileImage image, string ImageName)
+    public string SaveActorImage(FileImage image, string ImageName)
+    {
+        var path = $"Actor/{ImageName}{image.Extention}";
+
+        var files = Directory.GetFiles("wwwroot/Actor/");
+        var savePath = $"wwwroot/{path}";
+        var existingFile = files.FirstOrDefault(f => f.Split(".")[0] == savePath.Split(".")[0]);
+
+        if (existingFile is not null)
+            File.Delete(existingFile);
+
+        File.WriteAllBytes(savePath, image.Image);
+
+        return path;
+    }
+
+    public string SaveDirectorImage(FileImage image, string ImageName)
     {
         var path = $"Director/{ImageName}{image.Extention}";
 

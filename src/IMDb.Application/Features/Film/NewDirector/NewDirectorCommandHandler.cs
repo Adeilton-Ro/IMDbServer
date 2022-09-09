@@ -26,7 +26,7 @@ public class NewDirectorCommandHandler : IRequestHandler<NewDirectorCommand, Res
             Name = request.Name
         };
 
-        director.UrlImage = fileRepository.SaveDirectorImages(request.Image, director.Id.ToString());
+        director.UrlImage = fileRepository.SaveDirectorImage(request.Image, director.Id.ToString());
 
         await directorRepository.Create(director, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
