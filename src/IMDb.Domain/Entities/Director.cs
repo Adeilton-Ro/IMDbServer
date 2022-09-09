@@ -3,5 +3,5 @@
 namespace IMDb.Domain.Entities;
 public class Director : Cast
 {
-    public IEnumerable<Film> Films { get; set; }
+    public IEnumerable<DirectorFilm> DirectorFilms { get; set; }
 }

@@ -5,10 +5,8 @@ public class Film : Entity
 {
     public string Name { get; set; } = string.Empty;
     public IEnumerable<FilmImage> FilmImages { get; set; }
-    public Guid GenderId { get; set; }
-    public Gender Gender { get; set; }
-    public IEnumerable<ActorFilm> ActorFilms { get; set; } 
-    public Guid DirectorId { get; set; }
-    public Director Director { get; set; }
+    public IEnumerable<GenderFilm> GenderFilm { get; set; }
+    public IEnumerable<ActorFilm> ActorFilms { get; set; }
+    public IEnumerable<DirectorFilm> DirectorFilms { get; set; }
     public IEnumerable<Vote> Votes { get; set; }
 }

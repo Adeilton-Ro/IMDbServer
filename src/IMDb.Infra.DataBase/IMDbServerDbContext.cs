@@ -15,6 +15,10 @@ public class IMDbServerDbContext : DbContext, IUnitOfWork
 	public DbSet<Gender> Genders { get; set; }
 	public DbSet<Director> Directors { get; set; }
 	public DbSet<Vote> Votes { get; set; }
+	public DbSet<DirectorFilm> DirectorFilms { get; set; }
+	public DbSet<GenderFilm> GenderFilms { get; set; }
+	public DbSet<ActorFilm> ActorFilms { get; set; }
+	public DbSet<FilmImage> FilmImages { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -25,5 +29,9 @@ public class IMDbServerDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new GenderMap());
         modelBuilder.ApplyConfiguration(new DirectorMap());
 		modelBuilder.ApplyConfiguration(new VoteMap());
+		modelBuilder.ApplyConfiguration(new DirectorFilmMap());
+		modelBuilder.ApplyConfiguration(new GenderFilmMap());
+		modelBuilder.ApplyConfiguration(new ActorFilmMap());
+		modelBuilder.ApplyConfiguration(new FilmImagesMap());
     }
 }

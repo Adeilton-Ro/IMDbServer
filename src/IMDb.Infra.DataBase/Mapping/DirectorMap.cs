@@ -9,6 +9,6 @@ public class DirectorMap : IEntityTypeConfiguration<Director>
     {
         builder.HasKey(d => d.Id);
         builder.Property(d => d.Name).IsRequired();
-        builder.HasMany(d => d.Films).WithOne(f => f.Director).HasForeignKey(f => f.DirectorId);
+        builder.HasMany(d => d.DirectorFilms).WithOne(df => df.Director).HasForeignKey(df => df.DirectorId);
     }
 }

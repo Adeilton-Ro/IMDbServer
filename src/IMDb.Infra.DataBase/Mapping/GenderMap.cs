@@ -9,6 +9,6 @@ public class GenderMap : IEntityTypeConfiguration<Gender>
     {
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Name).IsRequired();
-        builder.HasMany(g => g.Films).WithOne(f => f.Gender).HasForeignKey(f => f.GenderId);
+        builder.HasMany(g => g.GenderFilms).WithOne(gf => gf.Gender).HasForeignKey(gf => gf.GenderId);
     }
 }
