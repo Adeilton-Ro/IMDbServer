@@ -2,7 +2,7 @@
 using IMDb.Infra.FileSystem.Abstraction;
 using MediatR;
 
-namespace IMDb.Application.Features.Film.NewDirector;
+namespace IMDb.Application.Features.Films.NewDirector;
 public record NewDirectorCommand : IRequest<Result<NewDirectorCommandResponse>>
 {
     public string Name { get; set; }

@@ -2,8 +2,8 @@
 using IMDb.Infra.FileSystem.Abstraction;
 using MediatR;
 
-namespace IMDb.Application.Features.Film.NewActor;
-public record NewActorCommand :  IRequest<Result<NewActorCommandResponse>>
+namespace IMDb.Application.Features.Films.NewActor;
+public record NewActorCommand : IRequest<Result<NewActorCommandResponse>>
 {
     public string Name { get; set; }
     public FileImage Image { get; set; }

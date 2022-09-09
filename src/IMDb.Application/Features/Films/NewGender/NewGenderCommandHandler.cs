@@ -4,7 +4,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.Film.NewGender;
+namespace IMDb.Application.Features.Films.NewGender;
 public class NewGenderCommandHandler : IRequestHandler<NewGenderCommand, Result<NewGenderCommandResponse>>
 {
     private readonly IGenderRepository genderRepository;

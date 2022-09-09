@@ -3,7 +3,7 @@ using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
 
-namespace IMDb.Application.Features.Film.GetDirectors;
+namespace IMDb.Application.Features.Films.GetDirectors;
 public class GetDirectorQueryHandler : IRequestHandler<GetDirectorQuery, Result<IEnumerable<GetDirectorQueryResponse>>>
 {
     private readonly ICastRepository<Director> directorRepository;

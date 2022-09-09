@@ -5,7 +5,7 @@ using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using IMDb.Infra.FileSystem.Abstraction.Interfaces.FileRepositories;
 using MediatR;
 
-namespace IMDb.Application.Features.Film.NewDirector;
+namespace IMDb.Application.Features.Films.NewDirector;
 public class NewDirectorCommandHandler : IRequestHandler<NewDirectorCommand, Result<NewDirectorCommandResponse>>
 {
     private readonly ICastRepository<Director> directorRepository;
