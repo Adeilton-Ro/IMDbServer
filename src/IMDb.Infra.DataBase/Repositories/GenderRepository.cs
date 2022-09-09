@@ -12,4 +12,7 @@ public class GenderRepository : IGenderRepository
     }
     public async Task Create(Gender gender, CancellationToken cancellationToken)
      => await context.AddAsync(gender, cancellationToken);
+
+    public IEnumerable<Gender> GetAll()
+        => context.Genders;
 }
