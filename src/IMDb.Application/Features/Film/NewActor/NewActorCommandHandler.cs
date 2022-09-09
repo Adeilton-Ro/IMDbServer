@@ -8,11 +8,11 @@ using MediatR;
 namespace IMDb.Application.Features.Film.NewActor;
 public class NewActorCommandHandler : IRequestHandler<NewActorCommand, Result<NewActorCommandResponse>>
 {
-    private readonly IActorRepository actorRepository;
+    private readonly ICastRepository<Actor> actorRepository;
     private readonly IFileRepository fileRepository;
     private readonly IUnitOfWork unitOfWork;
 
-    public NewActorCommandHandler(IActorRepository actorRepository, IFileRepository fileRepository, IUnitOfWork unitOfWork)
+    public NewActorCommandHandler(ICastRepository<Actor> actorRepository, IFileRepository fileRepository, IUnitOfWork unitOfWork)
     {
         this.actorRepository = actorRepository;
         this.fileRepository = fileRepository;

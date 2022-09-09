@@ -22,9 +22,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserRepository<Client>, UserRepository<Client>>();
         services.AddScoped<IUserRepository<Adm>, UserRepository<Adm>>();
-        services.AddScoped<IDirectorRepository, DirectorRepository>();
+        services.AddScoped<ICastRepository<Director>, CastRepository<Director>>();
         services.AddScoped<IGenderRepository, GenderRepository>();
-        services.AddScoped<IActorRepository, ActorRepository>();
+        services.AddScoped<ICastRepository<Actor>, CastRepository<Actor>>();
 
         return services;
     }
