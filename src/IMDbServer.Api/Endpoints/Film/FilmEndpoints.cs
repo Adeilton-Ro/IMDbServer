@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IMDb.Application.Features.Film.GetActor;
 using IMDb.Application.Features.Film.GetDirectors;
 using IMDb.Application.Features.Film.NewActor;
 using IMDb.Application.Features.Film.NewDirector;
@@ -49,6 +50,12 @@ public static class FilmEndpoints
         app.MapGet("film/directors", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, CancellationToken cancellationToken) =>
         {
             var result = await sender.Send(new GetDirectorQuery(), cancellationToken);
+            return MapAllEndpoints.SendResponse(result);
+        });
+
+        app.MapGet("film/actors", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(new GetActorQuery(), cancellationToken);
             return MapAllEndpoints.SendResponse(result);
         });
 
