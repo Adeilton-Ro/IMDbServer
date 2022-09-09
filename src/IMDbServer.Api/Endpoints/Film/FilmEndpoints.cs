@@ -26,6 +26,12 @@ public static class FilmEndpoints
             return MapAllEndpoints.SendResponse(result);
         }).Accepts<NewDirectorRequest>("multipart/form-data");
 
+        app.MapPost("film/newgender", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, NewGenderCommand request, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request);
+            return MapAllEndpoints.SendResponse(result);
+        });
+
         app.MapPost("film/newactor", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromServices] IMapper mapper
             , HttpRequest request, CancellationToken cancellationToken) =>
         {
