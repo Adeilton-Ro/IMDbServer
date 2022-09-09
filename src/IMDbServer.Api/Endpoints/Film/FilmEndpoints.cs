@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IMDb.Application.Features.Film.GetDirectors;
 using IMDb.Application.Features.Film.NewActor;
 using IMDb.Application.Features.Film.NewDirector;
 using IMDb.Application.Features.Film.NewGender;
@@ -28,7 +29,7 @@ public static class FilmEndpoints
 
         app.MapPost("film/newgender", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, NewGenderCommand request, CancellationToken cancellationToken) =>
         {
-            var result = await sender.Send(request);
+            var result = await sender.Send(request, cancellationToken);
             return MapAllEndpoints.SendResponse(result);
         });
 
@@ -44,6 +45,12 @@ public static class FilmEndpoints
             var result = await sender.Send(map, cancellationToken);
             return MapAllEndpoints.SendResponse(result);
         }).Accepts<NewActorRequest>("multipart/form-data");
+
+        app.MapGet("film/directors", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(new GetDirectorQuery(), cancellationToken);
+            return MapAllEndpoints.SendResponse(result);
+        });
 
         return app;
     }
