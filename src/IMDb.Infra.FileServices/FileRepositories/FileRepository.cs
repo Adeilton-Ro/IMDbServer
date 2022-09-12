@@ -36,14 +36,14 @@ public class FileRepository : IFileRepository
         return path;
     }
 
-    public IEnumerable<string> SaveFilmImage(IEnumerable<NamedFileImage> images, string directorName)
+    public IEnumerable<string> SaveFilmImage(IEnumerable<NamedFileImage> images, string filmName)
     {
-        Directory.CreateDirectory($"wwwroot/Film/{directorName}");
+        Directory.CreateDirectory($"wwwroot/Film/{filmName}");
 
-        var paths = images.Select(i => $"Film/{directorName}/{i.Name}{i.Image.Extention}");
+        var paths = images.Select(i => $"Film/{filmName}/{i.Name}{i.Image.Extention}");
 
         foreach (var image in images)
-            File.WriteAllBytes($"wwwroot/Film/{directorName}/{image.Name}{image.Image.Extention}", image.Image.Image);
+            File.WriteAllBytes($"wwwroot/Film/{filmName}/{image.Name}{image.Image.Extention}", image.Image.Image);
 
         return paths;
     }

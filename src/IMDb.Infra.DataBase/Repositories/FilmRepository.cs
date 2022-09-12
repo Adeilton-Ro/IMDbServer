@@ -18,7 +18,7 @@ public class FilmRepository : IFilmRepository
         => context.Films.FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
 
     public async Task<bool> NameAlredyExist(string name, CancellationToken cancellationToken)
-        => await context.Films.AnyAsync(f => f.Name == name, cancellationToken);
+        => await context.Films.AnyAsync(f => f.Name.ToLower() == name.ToLower(), cancellationToken);
 
     public async Task NewImages(IEnumerable<FilmImage> film, CancellationToken cancellationToken)
         => await context.AddRangeAsync(film, cancellationToken);
