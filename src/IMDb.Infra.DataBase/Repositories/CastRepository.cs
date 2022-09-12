@@ -1,6 +1,6 @@
-﻿using IMDb.Domain.Entities;
-using IMDb.Domain.Entities.Abstract;
+﻿using IMDb.Domain.Entities.Abstract;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMDb.Infra.DataBase.Repositories
 {
@@ -12,6 +12,9 @@ namespace IMDb.Infra.DataBase.Repositories
         {
             this.context = context;
         }
+
+        public Task<bool> AreAlredyCreated(IEnumerable<Guid> ids, CancellationToken cancellationToken)
+            => context.Set<T>().AnyAsync(c => ids.Contains(c.Id), cancellationToken);
 
         public async Task Create(T cast, CancellationToken cancellationToken)
             => await context.Set<T>().AddAsync(cast, cancellationToken);

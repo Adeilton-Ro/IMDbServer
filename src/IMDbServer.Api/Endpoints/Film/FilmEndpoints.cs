@@ -5,10 +5,11 @@ using IMDb.Application.Features.Films.GetGender;
 using IMDb.Application.Features.Films.NewActor;
 using IMDb.Application.Features.Films.NewDirector;
 using IMDb.Application.Features.Films.NewFilm;
+using IMDb.Application.Features.Films.NewFilmsImages;
 using IMDb.Application.Features.Films.NewGender;
 using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewActor;
 using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewDirector;
-using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewFilm;
+using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewFilmsImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -69,22 +70,24 @@ public static class FilmEndpoints
         });
 
         app.MapPost("film/newfilm", [Authorize(Roles = "Adm")] 
-        async ([FromServices] ISender sender, [FromServices] IMapper mapper
+        async ([FromServices] ISender sender, [FromBody] NewFilmCommand request, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+            return MapAllEndpoints.SendResponse(result);
+        });
+
+        app.MapPost("film/newfilmimages", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromServices] IMapper mapper
             , HttpRequest request, CancellationToken cancellationToken) =>
         {
             var form = await request.ReadFormAsync(cancellationToken);
-            var file = request.Form.Files;
+            var files = request.Form.Files;
 
-            var directors = form["directors"].Select(d => Guid.Parse(d));
-            var actors = form["actors"].Select(a => Guid.Parse(a));
-            var genders = form["genders"].Select(g => Guid.Parse(g));
+            var newActorRequest = new NewFilmsImagesRequest(Guid.Parse(form["id"]), files);
 
-            var newFilmRequest = new NewFilmRequest(form["name"], file, directors, actors, genders);
-
-            var map = mapper.W<NewFilmCommand>(newFilmRequest);
+            var map = mapper.Map<NewFilmsImagesCommand>(newActorRequest);
             var result = await sender.Send(map, cancellationToken);
             return MapAllEndpoints.SendResponse(result);
-        }).Accepts<NewFilmRequest>("multipart/form-data");
+        }).Accepts<NewFilmsImagesRequest>("multipart/form-data");
 
         return app;
     }

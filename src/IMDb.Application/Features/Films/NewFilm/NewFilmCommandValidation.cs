@@ -9,6 +9,5 @@ public class NewFilmCommandValidation : AbstractValidator<NewFilmCommand>
         RuleFor(nfc => nfc.Directors).NotEmpty();
         RuleFor(nfc => nfc.Actors).NotEmpty();
         RuleFor(nfc => nfc.Genders).NotEmpty();
-        RuleFor(nfc => nfc.Images).NotEmpty();
     }
 }

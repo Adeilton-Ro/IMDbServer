@@ -38,22 +38,12 @@ public class FileRepository : IFileRepository
 
     public IEnumerable<string> SaveFilmImage(IEnumerable<NamedFileImage> images, string directorName)
     {
-        var existingDirectories = Directory.GetDirectories("wwwroot/Film");
-        if(!existingDirectories.Any(ed => ed == directorName))
-            Directory.CreateDirectory($"wwwroot/Film/{directorName}");
+        Directory.CreateDirectory($"wwwroot/Film/{directorName}");
 
         var paths = images.Select(i => $"Film/{directorName}/{i.Name}{i.Image.Extention}");
 
-        var files = Directory.GetFiles($"wwwroot/Film/{directorName}");
-        var savePaths = paths.Select(p => $"wwwroot/{p}");
-        var existingFiles = files.Where(f => savePaths.Any(sp => sp.Split(".")[0] == f.Split(".")[0]));
-
-        if (existingFiles.Any())
-            foreach(var existingFile in existingFiles)
-                File.Delete(existingFile);
-
         foreach (var image in images)
-            File.WriteAllBytes(savePaths.FirstOrDefault(sp => sp == $"wwwroot/Film/{directorName}/{image.Name}{image.Image.Extention}"), image.Image.Image);
+            File.WriteAllBytes($"wwwroot/Film/{directorName}/{image.Name}{image.Image.Extention}", image.Image.Image);
 
         return paths;
     }

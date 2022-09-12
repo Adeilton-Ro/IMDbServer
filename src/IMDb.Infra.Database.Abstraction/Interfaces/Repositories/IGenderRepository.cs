@@ -5,4 +5,5 @@ public interface IGenderRepository
 {
     Task Create(Gender gender, CancellationToken cancellationToken);
     IEnumerable<Gender> GetAll();
+    Task<bool> AreAlredyCreated(IEnumerable<Guid> ids, CancellationToken cancellationToken);
 }
