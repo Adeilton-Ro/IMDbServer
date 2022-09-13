@@ -14,49 +14,52 @@ public class FilmRepository : IFilmRepository
     public async Task Create(Film film, CancellationToken cancellationToken)
         => await context.AddAsync(film, cancellationToken);
 
-    public List<Film> GetAllByFilters(IEnumerable<Guid>? directors, string? name,
-        IEnumerable<Guid>? gender, IEnumerable<Guid>? actors, int start, int end)
+    public IEnumerable<Film> GetAllByFilters(IEnumerable<Guid?> directors, string? name,
+        IEnumerable<Guid?> gender, IEnumerable<Guid?> actors, int start, int end)
     {
         var filters = new List<Func<Film, bool>>();
 
-        var films = context.Films.OrderBy(c => c.Name).Skip(start).Take(end);
+        var films = context.Films.Include(f => f.FilmImages).Include(f => f.GenderFilm)
+            .Include(f => f.DirectorFilms).Include(f => f.ActorFilms).
+            OrderBy(c => c.Name).Skip(start).Take(end);
 
         if (!string.IsNullOrEmpty(name))
             filters.Add(film => film.Name.StartsWith(name));
 
-        if (gender is not null)
+        if (!gender.Any(g => g is null))
             filters.Add(film => film.GenderFilm.Any(gf => gender.Contains(gf.GenderId)));
-
-        if (directors is not null)
+            
+        if (!directors.Any(d => d is null))
             filters.Add(film => film.DirectorFilms.Any(df => directors.Contains(df.DirectorId)));
 
-        if (actors is not null)
+        if (!actors.Any(a => a is null))
             filters.Add(film => film.ActorFilms.Any(af => actors.Contains(af.ActorId)));
 
-
-        return filters.Aggregate(films as List<Film>, (seed, filter) => seed.Where(filter));
+        return filters.Aggregate(films as IEnumerable<Film>, (seed, filter) => seed.Where(filter));
     }
 
-    public List<Film> GetAllByFiltersDescending(IEnumerable<Guid>? directors, string? name,
-        IEnumerable<Guid>? gender, IEnumerable<Guid>? actors, int start, int end)
+    public IEnumerable<Film> GetAllByFiltersDescending(IEnumerable<Guid?> directors, string? name,
+        IEnumerable<Guid?> gender, IEnumerable<Guid?> actors, int start, int end)
     {
         var filters = new List<Func<Film, bool>>();
 
-        var films = context.Films.OrderByDescending(c => c.Name).Skip(start).Take(end);
+        var films = context.Films.Include(f => f.FilmImages).Include(f => f.GenderFilm)
+            .Include(f => f.DirectorFilms).Include(f => f.ActorFilms).Include(f => f.Votes)
+            .OrderBy(c => c.Name).Skip(start).Take(end);
 
         if (!string.IsNullOrEmpty(name))
             filters.Add(film => film.Name.StartsWith(name));
 
-        if (gender is not null)
-            filters.Add(film => film.GenderFilm.Any(gf => gender.Contains(gf.GenderId)));
+        if (gender.Any(g => g is null))
+            filters.Add(film => film.GenderFilm.All(gf => gender.Contains(gf.GenderId)));
 
-        if (directors is not null)
-            filters.Add(film => film.DirectorFilms.Any(df => directors.Contains(df.DirectorId)));
+        if (directors.Any(d => d is null))
+            filters.Add(film => film.DirectorFilms.All(df => directors.Contains(df.DirectorId)));
 
-        if (actors is not null)
-            filters.Add(film => film.ActorFilms.Any(af => actors.Contains(af.ActorId)));
+        if (actors.Any(a => a is null))
+            filters.Add(film => film.ActorFilms.All(af => actors.Contains(af.ActorId)));
 
-        return filters.Aggregate(films as List<Film>, (seed, filter) => seed.Where(filter));
+        return filters.Aggregate(films as IEnumerable<Film>, (seed, filter) => seed.Where(filter));
     }
     public Task<Film> GetById(Guid id, CancellationToken cancellationToken)
         => context.Films.FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
