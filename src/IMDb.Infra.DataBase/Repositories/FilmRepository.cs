@@ -19,9 +19,11 @@ public class FilmRepository : IFilmRepository
     {
         var filters = new List<Func<Film, bool>>();
 
-        var films = context.Films.Include(f => f.FilmImages).Include(f => f.GenderFilm)
-            .Include(f => f.DirectorFilms).Include(f => f.ActorFilms).
-            OrderBy(c => c.Name).Skip(start).Take(end);
+        var films = context.Films.Include(f => f.FilmImages)
+            .Include(f => f.GenderFilm).ThenInclude(gf => gf.Gender)
+            .Include(f => f.DirectorFilms).ThenInclude(df => df.Director)
+            .Include(f => f.ActorFilms).ThenInclude(af => af.Actor)
+            .OrderBy(c => c.Name).Skip(start).Take(end);
 
         if (!string.IsNullOrEmpty(name))
             filters.Add(film => film.Name.StartsWith(name));

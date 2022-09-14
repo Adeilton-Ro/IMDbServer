@@ -20,7 +20,8 @@ public class NewGenderCommandHandler : IRequestHandler<NewGenderCommand, Result<
         var gender = new Gender
         {
             Id = Guid.NewGuid(),
-            Name = request.Name
+            Name = request.Name,
+            Description = request.Description
         };
 
         await genderRepository.Create(gender, cancellationToken);

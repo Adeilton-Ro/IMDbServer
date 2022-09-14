@@ -23,7 +23,8 @@ public class NewActorCommandHandler : IRequestHandler<NewActorCommand, Result<Ne
         var actor = new Actor
         {
             Id = Guid.NewGuid(),
-            Name = request.Name
+            Name = request.Name,
+            Description = request.Description,
         };
 
         actor.UrlImage = fileRepository.SaveActorImage(request.Image, actor.Id.ToString());

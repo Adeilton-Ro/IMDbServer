@@ -23,7 +23,8 @@ public class NewDirectorCommandHandler : IRequestHandler<NewDirectorCommand, Res
         var director = new Director
         {
             Id = Guid.NewGuid(),
-            Name = request.Name
+            Name = request.Name,
+            Description = request.Description
         };
 
         director.UrlImage = fileRepository.SaveDirectorImage(request.Image, director.Id.ToString());

@@ -25,7 +25,7 @@ public static class FilmEndpoints
             var form = await request.ReadFormAsync(cancellationToken);
             var file = request.Form.Files;
 
-            var newDirectorRequest = new NewDirectorRequest(form["name"], file[0]);
+            var newDirectorRequest = new NewDirectorRequest(form["name"], form["description"],file[0]);
 
             var map = mapper.Map<NewDirectorCommand>(newDirectorRequest);
             var result = await sender.Send(map, cancellationToken);
@@ -44,7 +44,7 @@ public static class FilmEndpoints
             var form = await request.ReadFormAsync(cancellationToken);
             var file = request.Form.Files;
 
-            var newActorRequest = new NewActorRequest(form["name"], file[0]);
+            var newActorRequest = new NewActorRequest(form["name"], form["description"], file[0]);
 
             var map = mapper.Map<NewActorCommand>(newActorRequest);
             var result = await sender.Send(map, cancellationToken);
