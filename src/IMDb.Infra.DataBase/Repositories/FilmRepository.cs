@@ -30,7 +30,7 @@ public class FilmRepository : IFilmRepository
 
         if (!gender.Any(g => g is null))
             filters.Add(film => film.GenderFilm.Any(gf => gender.Contains(gf.GenderId)));
-            
+
         if (!directors.Any(d => d is null))
             filters.Add(film => film.DirectorFilms.Any(df => directors.Contains(df.DirectorId)));
 
@@ -66,9 +66,12 @@ public class FilmRepository : IFilmRepository
     public Task<Film> GetById(Guid id, CancellationToken cancellationToken)
         => context.Films.FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
 
-        public async Task<bool> NameAlredyExist(string name, CancellationToken cancellationToken)
-            => await context.Films.AnyAsync(f => f.Name.ToLower() == name.ToLower(), cancellationToken);
+    public async Task<bool> NameAlredyExist(string name, CancellationToken cancellationToken)
+        => await context.Films.AnyAsync(f => f.Name.ToLower() == name.ToLower(), cancellationToken);
 
-        public async Task NewImages(IEnumerable<FilmImage> film, CancellationToken cancellationToken)
-            => await context.AddRangeAsync(film, cancellationToken);
-    }
+    public async Task NewImages(IEnumerable<FilmImage> film, CancellationToken cancellationToken)
+        => await context.AddRangeAsync(film, cancellationToken);
+
+    public void Update(Film film)
+        => context.Update(film);
+}

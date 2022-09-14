@@ -7,12 +7,16 @@ using IMDb.Application.Features.Films.NewDirector;
 using IMDb.Application.Features.Films.NewFilm;
 using IMDb.Application.Features.Films.NewFilmsImages;
 using IMDb.Application.Features.Films.NewGender;
+using IMDb.Application.Features.Films.Rate;
 using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewActor;
 using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewDirector;
 using IMDbServer.Api.Endpoints.Film.CustomizerRequests.NewFilmsImage;
+using IMDbServer.Api.Endpoints.Film.CustomizerRequests.Rate;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Threading;
 
 namespace IMDbServer.Api.Endpoints.Film;
 public static class FilmEndpoints
@@ -88,6 +92,15 @@ public static class FilmEndpoints
             var result = await sender.Send(map, cancellationToken);
             return MapAllEndpoints.SendResponse(result);
         }).Accepts<NewFilmsImagesRequest>("multipart/form-data");
+
+        app.MapPost("film/rate", [Authorize(Roles = "Client")] async ([FromServices] ISender sender, [FromServices] IMapper mapper
+            , [FromBody] RateRequest request, CancellationToken cancellationToken) =>
+        {
+            var map = mapper.Map<RateCommand>(request);
+            var result = await sender.Send(map, cancellationToken);
+
+            return MapAllEndpoints.SendResponse(result);
+        });
 
         return app;
     }
