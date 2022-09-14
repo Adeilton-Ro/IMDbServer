@@ -45,6 +45,7 @@ public class NewFilmCommandHandler : IRequestHandler<NewFilmCommand, Result<NewF
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
+            Synopsis = request.Synopsis,
             Release = request.Release,
             ActorFilms = actorFilms,
             DirectorFilms = directorFilms,

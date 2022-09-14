@@ -66,7 +66,7 @@ public class NewFilmCommandHandlerTesting
     [Fact]
     public async Task Success()
     {
-        var request = new NewFilmCommand("Lord of the Rings", new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
+        var request = new NewFilmCommand("Lord of the Rings", "",DateTime.UtcNow, new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
             new List<Guid> { Guid.Parse("149b5e80-8c5f-4a5f-b339-4a71e6fedb03") }, new List<Guid> { Guid.Parse("216dfdc6-34ce-4f47-978b-71ab4a32a7d0") });
         var handler = new NewFilmCommandHandler(filmRepositoryMock.Object, unitOfWorkMock.Object, actorRepositoryMock.Object, 
             directorRepositoryMock.Object, genderRepositoryMock.Object);
@@ -82,7 +82,7 @@ public class NewFilmCommandHandlerTesting
     [Fact]
     public async Task Director_Doesnt_Exist()
     {
-        var request = new NewFilmCommand("Lord of the Rings", new List<Guid> { Guid.Parse("8dcce9b9-2baf-4e02-a45f-89b3f51ba507") },
+        var request = new NewFilmCommand("Lord of the Rings", "", DateTime.UtcNow, new List<Guid> { Guid.Parse("8dcce9b9-2baf-4e02-a45f-89b3f51ba507") },
             new List<Guid> { Guid.Parse("149b5e80-8c5f-4a5f-b339-4a71e6fedb03") }, new List<Guid> { Guid.Parse("216dfdc6-34ce-4f47-978b-71ab4a32a7d0") });
         var handler = new NewFilmCommandHandler(filmRepositoryMock.Object, unitOfWorkMock.Object, actorRepositoryMock.Object,
             directorRepositoryMock.Object, genderRepositoryMock.Object);
@@ -97,7 +97,7 @@ public class NewFilmCommandHandlerTesting
     [Fact]
     public async Task Actor_Doesnt_Exist()
     {
-        var request = new NewFilmCommand("Lord of the Rings", new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
+        var request = new NewFilmCommand("Lord of the Rings", "", DateTime.UtcNow, new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
             new List<Guid> { Guid.Parse("9c47433d-851a-4578-b7e4-705be7a0c2ad") }, new List<Guid> { Guid.Parse("216dfdc6-34ce-4f47-978b-71ab4a32a7d0") });
         var handler = new NewFilmCommandHandler(filmRepositoryMock.Object, unitOfWorkMock.Object, actorRepositoryMock.Object,
             directorRepositoryMock.Object, genderRepositoryMock.Object);
@@ -112,7 +112,7 @@ public class NewFilmCommandHandlerTesting
     [Fact]
     public async Task Gender_Doesnt_Exist()
     {
-        var request = new NewFilmCommand("Lord of the Rings", new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
+        var request = new NewFilmCommand("Lord of the Rings", "", DateTime.UtcNow, new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
             new List<Guid> { Guid.Parse("149b5e80-8c5f-4a5f-b339-4a71e6fedb03") }, new List<Guid> { Guid.Parse("173c909b-7084-4912-98a3-69d592523af1") });
         var handler = new NewFilmCommandHandler(filmRepositoryMock.Object, unitOfWorkMock.Object, actorRepositoryMock.Object,
             directorRepositoryMock.Object, genderRepositoryMock.Object);
@@ -129,7 +129,7 @@ public class NewFilmCommandHandlerTesting
     [InlineData("star wars")]
     public async Task The_Film_Alredy_Exist(string name)
     {
-        var request = new NewFilmCommand(name, new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
+        var request = new NewFilmCommand(name, "", DateTime.UtcNow, new List<Guid> { Guid.Parse("2b3a306f-61ff-439b-a0be-eef149b658aa") },
             new List<Guid> { Guid.Parse("149b5e80-8c5f-4a5f-b339-4a71e6fedb03") }, new List<Guid> { Guid.Parse("216dfdc6-34ce-4f47-978b-71ab4a32a7d0") });
         var handler = new NewFilmCommandHandler(filmRepositoryMock.Object, unitOfWorkMock.Object, actorRepositoryMock.Object,
             directorRepositoryMock.Object, genderRepositoryMock.Object);

@@ -5,6 +5,8 @@ public class Film : Entity
 {
     public string Name { get; set; } = string.Empty;
     public decimal Average { get; set; } = 0;
+    public int Voters { get; set; } = 0;
+    public string Synopsis { get; set; } = string.Empty;
     public IEnumerable<FilmImage> FilmImages { get; set; }
     public IEnumerable<GenderFilm> GenderFilm { get; set; }
     public IEnumerable<ActorFilm> ActorFilms { get; set; }
