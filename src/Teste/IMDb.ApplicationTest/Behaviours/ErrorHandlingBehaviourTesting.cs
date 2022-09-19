@@ -41,8 +41,3 @@ public class ErrorHandlingBehaviourTesting
         Assert.True(result.IsSuccess);
     }
 }
-
-public class TestRequest : IRequest<Result>
-{
-
-}

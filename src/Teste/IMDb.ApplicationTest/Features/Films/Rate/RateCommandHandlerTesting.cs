@@ -54,7 +54,7 @@ public class RateCommandHandlerTesting
 		filmRepositoryMock.Setup(fr => fr.GetById(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Guid id, CancellationToken ct) => filmList.FirstOrDefault(ul => ul.Id == id));
 		filmRepositoryMock.Setup(fr => fr.Update(It.IsAny<Film>()))
-			.Callback((Film film) => { filmList.Remove(filmList.FirstOrDefault(f => f.Id == film.Id)); filmList.Add(film); });
+			.Callback((Film film) => { filmList.Remove(filmList.First(f => f.Id == film.Id)); filmList.Add(film); });
 
 		voteRepositoryMock.Setup(vr => vr.Create(It.IsAny<Vote>(), It.IsAny<CancellationToken>()))
 			.Callback((Vote v, CancellationToken ct) => context.Add(v))
@@ -75,9 +75,9 @@ public class RateCommandHandlerTesting
 		Assert.True(result.IsSuccess);
 		Assert.Empty(result.Errors);
 		Assert.NotNull(result.ValueOrDefault);
-		Assert.Equal(result.Value.Avarage, 2);
-		Assert.Equal(result.Value.Voters, 5);
-		Assert.Equal(context.Count, 2);
+		Assert.Equal(2, result.Value.Avarage);
+		Assert.Equal(5, result.Value.Voters);
+		Assert.Equal(2, context.Count);
 	}
     [Fact]
     public async Task Client_Alredy_Rated()

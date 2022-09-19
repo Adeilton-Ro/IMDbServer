@@ -32,7 +32,7 @@ public class DisableAdmAccountCommandHandlerTesting
             .ReturnsAsync((Guid id, CancellationToken ct) => context.FirstOrDefault(c => c.Id == id));
 
         userRepositoryMock.Setup(ur => ur.Edit(It.IsAny<Adm>()))
-            .Callback<Adm>(u => { context.Remove(context.FirstOrDefault(c => c.Id == u.Id)); context.Add(u); });
+            .Callback<Adm>(u => { context.Remove(context.First(c => c.Id == u.Id)); context.Add(u); });
 
         handler = new DisableAdmAccountCommandHandler(userRepositoryMock.Object, unitOfWorkMock.Object);
     }
@@ -49,7 +49,7 @@ public class DisableAdmAccountCommandHandlerTesting
         unitOfWorkMock.VerifyAll();
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
-        Assert.False(context.FirstOrDefault(c => c.Id == request.Id).isActive);
+        Assert.False(context.First(c => c.Id == request.Id).isActive);
     }
 
     [Fact]
@@ -76,6 +76,6 @@ public class DisableAdmAccountCommandHandlerTesting
 
         Assert.True(result.IsFailed);
         Assert.NotEmpty(result.Errors);
-        Assert.False(context.FirstOrDefault(c => c.Id == request.Id).isActive);
+        Assert.False(context.First(c => c.Id == request.Id).isActive);
     }
 }

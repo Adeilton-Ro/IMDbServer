@@ -37,7 +37,7 @@ public class EditAdmCommandHandlerTesting
         userRepositoryMock.Setup(ur => ur.GetById(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Guid id, CancellationToken ct) => context.FirstOrDefault(c => c.Id == id));
         userRepositoryMock.Setup(ur => ur.Edit(It.IsAny<Adm>()))
-            .Callback<Adm>(user => { context.Remove(context.FirstOrDefault(c => c.Id == user.Id)); context.Add(user); });
+            .Callback<Adm>(user => { context.Remove(context.First(c => c.Id == user.Id)); context.Add(user); });
         userRepositoryMock.Setup(ur => ur.IsUniqueEmail(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((string email, CancellationToken ct) => !context.Any(c => c.Email == email));
 
@@ -61,8 +61,8 @@ public class EditAdmCommandHandlerTesting
         unitOfWorkMock.VerifyAll();
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
-        Assert.Equal(context.FirstOrDefault(c => c.Id == request.Id).Email, request.Email);
-        Assert.Equal(context.FirstOrDefault(c => c.Id == request.Id).Name, request.Name);
+        Assert.Equal(context.First(c => c.Id == request.Id).Email, request.Email);
+        Assert.Equal(context.First(c => c.Id == request.Id).Name, request.Name);
     }
 
     [Fact]

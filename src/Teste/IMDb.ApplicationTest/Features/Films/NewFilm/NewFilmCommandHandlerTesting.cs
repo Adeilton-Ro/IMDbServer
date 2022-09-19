@@ -76,7 +76,7 @@ public class NewFilmCommandHandlerTesting
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
         Assert.NotNull(result.Value);
-        Assert.Equal(context.Count, 2);
+        Assert.Equal(2, context.Count);
     }
 
     [Fact]

@@ -6,12 +6,12 @@ using Moq;
 using Xunit;
 
 namespace IMDb.ApplicationTest.Behaviours;
-public class Person : IRequest<Result>
+public class TestRequest : IRequest<Result>
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
 
-public class PersonValidation : AbstractValidator<Person>
+public class PersonValidation : AbstractValidator<TestRequest>
 {
     public PersonValidation()
     {
@@ -20,8 +20,8 @@ public class PersonValidation : AbstractValidator<Person>
 }
 public class ValidationHandlingBehaviourTesting
 {
-    private readonly ValidationHandlingBehaviour<Person, Result> Validator = 
-        new ValidationHandlingBehaviour<Person, Result>(new List<IValidator<Person>> { new PersonValidation() });
+    private readonly ValidationHandlingBehaviour<TestRequest, Result> Validator = 
+        new ValidationHandlingBehaviour<TestRequest, Result>(new List<IValidator<TestRequest>> { new PersonValidation() });
     private readonly Mock<RequestHandlerDelegate<Result>> nextMock = new();
     public ValidationHandlingBehaviourTesting()
     {
@@ -30,7 +30,7 @@ public class ValidationHandlingBehaviourTesting
     [Fact]
     public async Task Pass_With_Success()
     {
-        var request = new Person { Name = "PassName" };
+        var request = new TestRequest { Name = "PassName" };
         var result = await Validator.Handle(request, CancellationToken.None, nextMock.Object);
 
         Assert.True(result.IsSuccess);
@@ -40,7 +40,7 @@ public class ValidationHandlingBehaviourTesting
     [Fact]
     public async Task Name_Was_Empty()
     {
-        var request = new Person { Name = "" };
+        var request = new TestRequest { Name = "" };
         var result = await Validator.Handle(request, CancellationToken.None, nextMock.Object);
 
         Assert.True(result.IsFailed);

@@ -39,21 +39,32 @@ public class NewFilmsImagesCommandHandlerTesting
     [Fact]
     public async Task Success()
     {
-        var request = new NewFilmsImagesCommand(Guid.Parse("c2e6c39e-32aa-4e67-bf84-8e507e065fa8"), new List<FileImage> { new FileImage(".jpg", null) });
+        var request = new NewFilmsImagesCommand(
+            Guid.Parse("c2e6c39e-32aa-4e67-bf84-8e507e065fa8"),
+            new List<FileImage>
+            {
+                new FileImage(".jpg", Array.Empty<byte>())
+            });
         var handler = new NewFilmsImagesCommandHandler(filmRepositoryMock.Object, fileRepositoryMock.Object, unitOfWorkMock.Object);
         var result = await handler.Handle(request, CancellationToken.None);
 
         unitOfWorkMock.VerifyAll();
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
-        Assert.Equal(result.Value.Paths.First(), "returning a movie image path");
+        Assert.Equal("returning a movie image path", result.Value.Paths.First());
         Assert.NotEmpty(context);
     }
 
     [Fact]
     public async Task The_Film_Doesnt_Exist()
     {
-        var request = new NewFilmsImagesCommand(Guid.Parse("0a9488f0-07d1-4729-898c-738aeeb01260"), new List<FileImage> { new FileImage(".jpg", null) });
+        var request = new NewFilmsImagesCommand(
+            Guid.Parse("0a9488f0-07d1-4729-898c-738aeeb01260"),
+            new List<FileImage>
+            {
+                new FileImage(".jpg", Array.Empty<byte>())
+            }
+        );
         var handler = new NewFilmsImagesCommandHandler(filmRepositoryMock.Object, fileRepositoryMock.Object, unitOfWorkMock.Object);
         var result = await handler.Handle(request, CancellationToken.None);
 

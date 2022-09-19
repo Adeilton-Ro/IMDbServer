@@ -32,7 +32,7 @@ public class DisableClientAccountCommandHandlerTesting
             .ReturnsAsync((Guid id, CancellationToken ct) => context.FirstOrDefault(c => c.Id == id));
 
         userRepositoryMock.Setup(ur => ur.Edit(It.IsAny<Client>()))
-            .Callback<Client>(u => { context.Remove(context.FirstOrDefault(c => c.Id == u.Id)); context.Add(u); });
+            .Callback<Client>(u => { context.Remove(context.First(c => c.Id == u.Id)); context.Add(u); });
 
         handler = new DisableClientAccountCommandHandler(userRepositoryMock.Object, unitOfWorkMock.Object);
     }
@@ -49,7 +49,7 @@ public class DisableClientAccountCommandHandlerTesting
         unitOfWorkMock.VerifyAll();
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
-        Assert.False(context.FirstOrDefault(c => c.Id == request.Id).isActive);
+        Assert.False(context.First(c => c.Id == request.Id).isActive);
     }
 
     [Fact]
@@ -76,6 +76,6 @@ public class DisableClientAccountCommandHandlerTesting
 
         Assert.True(result.IsFailed);
         Assert.NotEmpty(result.Errors);
-        Assert.False(context.FirstOrDefault(c => c.Id == request.Id).isActive);
+        Assert.False(context.First(c => c.Id == request.Id).isActive);
     }
 }
