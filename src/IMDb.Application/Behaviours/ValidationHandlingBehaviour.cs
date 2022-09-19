@@ -1,8 +1,6 @@
 ﻿using FluentResults;
 using MediatR;
 using FluentValidation;
-using System.ComponentModel.DataAnnotations;
-using System;
 using IMDb.Application.Extension;
 
 namespace IMDb.Application.Behaviours;

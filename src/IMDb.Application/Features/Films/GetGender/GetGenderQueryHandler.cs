@@ -11,9 +11,9 @@ public class GetGenderQueryHandler : IRequestHandler<GetGenderQuery, Result<IEnu
     {
         this.genderRepository = genderRepository;
     }
-    public async Task<Result<IEnumerable<GetGenderQueryResponse>>> Handle(GetGenderQuery request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<GetGenderQueryResponse>>> Handle(GetGenderQuery request, CancellationToken cancellationToken)
     {
         var response = genderRepository.GetAll().Select(g => new GetGenderQueryResponse(g.Id, g.Name));
-        return Result.Ok(response);
+        return Task.FromResult(Result.Ok(response));
     }
 }

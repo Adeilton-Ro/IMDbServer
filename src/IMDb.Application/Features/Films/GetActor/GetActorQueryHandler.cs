@@ -12,9 +12,9 @@ public class GetActorQueryHandler : IRequestHandler<GetActorQuery, Result<IEnume
     {
         this.actorRepository = actorRepository;
     }
-    public async Task<Result<IEnumerable<GetActorQueryResponse>>> Handle(GetActorQuery request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<GetActorQueryResponse>>> Handle(GetActorQuery request, CancellationToken cancellationToken)
     {
         var response = actorRepository.GetAll().Select(a => new GetActorQueryResponse(a.Id, a.Name, a.UrlImage));
-        return Result.Ok(response);
+        return Task.FromResult(Result.Ok(response));
     }
 }

@@ -9,7 +9,7 @@ public class CryptographyService : ICryptographyService
 
     public string CreateSalt()
     {
-        var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
+        var rng = RandomNumberGenerator.Create();
         var buff = new byte[10];
         rng.GetBytes(buff);
         return Convert.ToBase64String(buff);

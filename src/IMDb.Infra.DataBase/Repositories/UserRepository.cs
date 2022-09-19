@@ -15,7 +15,7 @@ public class UserRepository<T> : IUserRepository<T> where T : User
     public async Task Create(T user, CancellationToken cancellationToken)
         => await context.AddAsync(user, cancellationToken);
 
-    public Task<T> GetByEmail(string email, CancellationToken cancellationToken)
+    public Task<T?> GetByEmail(string email, CancellationToken cancellationToken)
      => context.Set<T>().FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
@@ -24,8 +24,8 @@ public class UserRepository<T> : IUserRepository<T> where T : User
     public void Edit(T user)
     => context.Set<T>().Update(user);   
 
-    public Task<T> GetById(Guid id, CancellationToken cancellationToken)
-        => context.Set<T>().FirstOrDefaultAsync(u => u.Id == id);
+    public Task<T?> GetById(Guid id, CancellationToken cancellationToken)
+        => context.Set<T>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 
     public IEnumerable<T> GetAllActive(PaginatedQueryOptions paginatedQueryOptions)
         => context.Set<T>().PaginateAndOrder(paginatedQueryOptions, u => u.Name);

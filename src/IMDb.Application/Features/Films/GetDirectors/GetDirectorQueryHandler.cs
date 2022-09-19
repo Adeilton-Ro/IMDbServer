@@ -12,9 +12,9 @@ public class GetDirectorQueryHandler : IRequestHandler<GetDirectorQuery, Result<
     {
         this.directorRepository = directorRepository;
     }
-    public async Task<Result<IEnumerable<GetDirectorQueryResponse>>> Handle(GetDirectorQuery request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<GetDirectorQueryResponse>>> Handle(GetDirectorQuery request, CancellationToken cancellationToken)
     {
         var response = directorRepository.GetAll().Select(d => new GetDirectorQueryResponse(d.Id, d.Name, d.UrlImage));
-        return Result.Ok(response);
+        return Task.FromResult(Result.Ok(response));
     }
 }

@@ -41,7 +41,7 @@ public class FilmRepository : IFilmRepository
         return filtered.PaginateAndOrder(paginated, f => f.Name);
     }
 
-    public Task<Film> GetById(Guid id, CancellationToken cancellationToken)
+    public Task<Film?> GetById(Guid id, CancellationToken cancellationToken)
         => context.Films.FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
 
     public async Task<bool> NameAlredyExist(string name, CancellationToken cancellationToken)
