@@ -10,17 +10,17 @@ public static class ListingEndpoints
 {
     public static WebApplication UseListingEndpoints(this WebApplication app)
     {
-        app.MapGet("listing/activeclients/{page:int=0}/{quantityOfItems:int=0}/{isDescending:bool=false}", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender,
-            [FromRoute]int page, [FromRoute]int quantityOfItems, [FromRoute]bool isDescending, CancellationToken cancellationToken) =>
+        app.MapGet("listing/activeclients", [Authorize(Roles = "Adm")] async ([FromServices] ISender sender,
+            [FromQuery]int page, [FromQuery]int quantityOfItems, [FromQuery]bool? isDescending, CancellationToken cancellationToken) =>
         {
             var result = await sender.Send(new GetActiveClientsQuery(page, quantityOfItems, isDescending), cancellationToken);
             return MapAllEndpoints.SendResponse(result);
         });
 
-        app.MapGet("listing/films/{directors=}/{name=}/{genders=}/{actors=}/{page:int=0}/{quantityOfItems:int=0}/{isDescending:bool=false}", 
-            [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromRoute] int page, 
-            [FromRoute] int quantityOfItems, [FromRoute] bool isDescending, [FromRoute] string directors, 
-            [FromRoute] string name, [FromRoute] string genders, [FromRoute] string actors, CancellationToken cancellationToken) =>
+        app.MapGet("listing/films", 
+            [Authorize(Roles = "Adm")] async ([FromServices] ISender sender, [FromQuery] int page, 
+            [FromQuery] int quantityOfItems, [FromQuery] bool? isDescending, [FromQuery] string directors, 
+            [FromQuery] string name, [FromQuery] string genders, [FromQuery] string actors, CancellationToken cancellationToken) =>
         {
             var listDirectors = directors.Split(",").Select(d => Utils.TryParseNullSafe(d));
             var listGenders = genders.Split(",").Select(g => Utils.TryParseNullSafe(g));

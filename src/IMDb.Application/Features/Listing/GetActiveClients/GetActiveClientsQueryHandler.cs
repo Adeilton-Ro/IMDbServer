@@ -1,5 +1,5 @@
 ﻿using FluentResults;
-using IMDb.Application.Extension;
+using IMDb.Domain.Commun;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
@@ -13,32 +13,13 @@ public class GetActiveClientsQueryHandler : IRequestHandler<GetActiveClientsQuer
     {
         this.userRepository = userRepository;
     }
-    public async Task<Result<IEnumerable<GetActiveClientsQueryResponse>>> Handle(GetActiveClientsQuery request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<GetActiveClientsQueryResponse>>> Handle(GetActiveClientsQuery request, CancellationToken cancellationToken)
     {
-        var clientList = new List<Client>();
-
-        if (request.IsDescending)
-            clientList = userRepository.GetAllActiveDescending();
-        else
-            clientList = userRepository.GetAllActive();
+        var paginated = new PaginatedQueryOptions(request.Page, request.QuatityOfItems, request.IsDescending);
+        var clientList = userRepository.GetAllActive(paginated);
 
         var response = clientList.Select(cl => new GetActiveClientsQueryResponse(cl.Id, cl.Email, cl.Name));
 
-        if (request.QuatityOfItems != 0 || request.Page != 0)
-        {
-            var quantityDb = clientList.Count - 1;
-
-            var start = request.QuatityOfItems * (request.Page - 1);
-
-            var end = start + request.QuatityOfItems;
-            if (quantityDb < start)
-                return Result.Fail(new ApplicationError("This page has no content"));
-
-            var pagedClient = clientList.Skip(start).Take(end);
-            response = pagedClient.Select(cl => new GetActiveClientsQueryResponse(cl.Id, cl.Email, cl.Name));
-            return Result.Ok(response);
-        }
-
-        return Result.Ok(response);
+        return Task.FromResult(Result.Ok(response));
     }
 }

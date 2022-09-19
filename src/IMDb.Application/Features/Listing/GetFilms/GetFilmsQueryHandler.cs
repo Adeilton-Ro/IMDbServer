@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDb.Domain.Commun;
 using IMDb.Domain.Entities;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using MediatR;
@@ -12,18 +13,17 @@ public class GetFilmsQueryHandler : IRequestHandler<GetFilmsQuery, Result<IEnume
     {
         this.filmRepository = filmRepository;
     }
-    public async Task<Result<IEnumerable<GetFilmsQueryResponse>>> Handle(GetFilmsQuery request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<GetFilmsQueryResponse>>> Handle(GetFilmsQuery request, CancellationToken cancellationToken)
     {
-        var start = request.QuantityOfItems * (request.Page - 1);
-        var end = start + request.QuantityOfItems;
-        end = end > 0 ? end : int.MaxValue;
+        var paginated = new PaginatedQueryOptions(request.Page, request.QuantityOfItems, request.IsDescending);
 
-        List<Film> films;
-
-        if (request.IsDescending)
-            films = filmRepository.GetAllByFiltersDescending(request.Directors, request.Name, request.Gender, request.Actors, start, end).ToList();
-        else
-            films = filmRepository.GetAllByFilters(request.Directors, request.Name, request.Gender, request.Actors, start, end).ToList();
+        var films = filmRepository.GetAll(
+            request.Directors, 
+            request.Name, 
+            request.Gender, 
+            request.Actors,
+            paginated
+            );
 
         var response = films.Select(s => 
             new GetFilmsQueryResponse(s.Id, s.Name, s.FilmImages.Select(fi => fi.Uri), s.Release,
@@ -32,6 +32,6 @@ public class GetFilmsQueryHandler : IRequestHandler<GetFilmsQuery, Result<IEnume
             s.ActorFilms.Select(a => new GetCastFilms(a.ActorId, a.Actor.Name, a.Actor.UrlImage, a.Actor.Birthday, a.Actor.Description)), 
             s.Average));
 
-        return Result.Ok(response);
+        return Task.FromResult(Result.Ok(response));
     }
 }

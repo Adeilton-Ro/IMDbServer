@@ -1,4 +1,5 @@
-﻿using IMDb.Domain.Entities.Abstract;
+﻿using IMDb.Domain.Commun;
+using IMDb.Domain.Entities.Abstract;
 
 namespace IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 public interface IUserRepository<T> where T : User 
@@ -8,6 +9,5 @@ public interface IUserRepository<T> where T : User
     Task<T> GetByEmail(string email, CancellationToken cancellationToken);
     void Edit(T user);
     Task<T> GetById(Guid Id, CancellationToken cancellationToken);
-    List<T> GetAllActive();
-    List<T> GetAllActiveDescending();
+    IEnumerable<T> GetAllActive(PaginatedQueryOptions paginated);
 }

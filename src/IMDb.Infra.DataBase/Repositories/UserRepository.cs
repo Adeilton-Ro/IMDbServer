@@ -1,4 +1,5 @@
-﻿using IMDb.Domain.Entities.Abstract;
+﻿using IMDb.Domain.Commun;
+using IMDb.Domain.Entities.Abstract;
 using IMDb.Infra.Database.Abstraction.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,14 +22,11 @@ public class UserRepository<T> : IUserRepository<T> where T : User
         => !await context.Set<T>().AnyAsync(c => c.Email == email, cancellationToken);
 
     public void Edit(T user)
-    => context.Set<T>().Update(user);
+    => context.Set<T>().Update(user);   
 
     public Task<T> GetById(Guid id, CancellationToken cancellationToken)
         => context.Set<T>().FirstOrDefaultAsync(u => u.Id == id);
 
-    public List<T> GetAllActive()
-        => context.Set<T>().Where(u => u.isActive).OrderBy(u => u.Name).ToList();
-
-    public List<T> GetAllActiveDescending()
-        => context.Set<T>().Where(u => u.isActive).OrderByDescending(u => u.Name).ToList();
+    public IEnumerable<T> GetAllActive(PaginatedQueryOptions paginatedQueryOptions)
+        => context.Set<T>().PaginateAndOrder(paginatedQueryOptions, u => u.Name);
 }
